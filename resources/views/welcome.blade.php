@@ -13,6 +13,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zona de Usuarios</a>
                     <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{{url('panel')}}">Panel</a>
                       <a class="dropdown-item" href="#">Mis Datos</a>
                       <a class="dropdown-item" href="#">Favoritos</a>
                       <a class="dropdown-item" href="#">Cerrar Sesión</a>
@@ -23,7 +24,7 @@
                         <a href="{{ route('login') }}" class="nav-link">Inicia Sesión</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('register') }}" class="nav-link">Resgistro</a>
+                        <a href="{{ route('register') }}" class="nav-link">Registro</a>
                     </li>
                     @endauth
                 </ul>
@@ -117,19 +118,26 @@
       <section class="blog">
     <div class="container">
       <div class="row">
+        
         <div class="col-sm-12 col-md-9">
+          @foreach($productos as $producto)
           <div class="blog-block post-content-area">
             <img src="{{asset('img/negocio.jpg')}}">
             <div class="blog-post">
-              <h3><a href="#">Nombre del Restaurant</a></h3>
-              <p>Descripción del Restaurant con imagen</p>
-              <a href="#" class="btn btn-common">Visitar</a>
+              <h3><a href="#">{{title_case($producto->user->name)}}</a></h3>
+              <div class="text-right">
+                <h6>Precio: ${{$producto->precio}}</h6>
+              </div>
+              <p>{{$producto->descripcion}}</p>
+              <a href="#" class="btn btn-common">Detalles</a>
+              <a href="#" class="btn btn-common"><i class="fa fa-shopping-cart"></i> Comprar</a>
             </div>
           </div>
 
           <div class="mb-60"></div>
+          @endforeach
 
-          <div class="blog-block post-content-area">
+          <!--<div class="blog-block post-content-area">
             
             <div class="blog-post">
               <h3><a href="#">Nombre del Restaurant</a></h3>
@@ -138,12 +146,12 @@
             </div>
           </div>
 
-          <div class="mb-60"></div>
+          <div class="mb-60"></div>-->
 
           
 
         </div>
-
+        
         <!-- Blog sidebar area -->
         <div class="col-sm-12 col-md-3">
           

@@ -11,10 +11,29 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/','SiteController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware'=> 'auth'],function(){
+	
+	Route::get('/panel', 'UserController@index');
+	Route::get('/perfil', 'UserController@perfil');
+	Route::get('/compras', 'UserController@compras');
+	Route::get('/favoritos', 'UserController@favoritos');
+	
+  	
+});
+
+
+Route::group(['middleware'=> 'auth'],function(){
+	
+	Route::get('/panel', 'UserController@index');
+	Route::get('/perfil', 'UserController@perfil');
+	Route::get('/productos', 'RestaurantController@productos');
+	Route::get('/producto/nuevo', 'RestaurantController@nuevoproducto');
+	Route::post('/producto/nuevo', 'RestaurantController@storeproducto');
+	Route::get('/ventas', 'RestaurantController@ventas');
+  	
+});
