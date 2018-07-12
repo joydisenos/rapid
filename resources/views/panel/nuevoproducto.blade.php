@@ -20,16 +20,22 @@ Agregar Producto
 
 		<hr>
 
+		
 		<div class="row">
 			<div class="col-md-4">
-				<p>Precio</p>
+				<p>Sabores <small>separados por coma</small></p>
 			</div>
 			<div class="col-md-8">
-				<input type="number" name="precio" step="0.05" class="form-control" placeholder="Precio" required>
+				
+					<input type="text" id="sabores" name="sabores" class="form-control">
+				
+
 			</div>
 		</div>
 
 		<hr>
+
+		
 
 		<div class="row">
 			<div class="col-md-4">

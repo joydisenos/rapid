@@ -11,10 +11,12 @@ Productos
                                     <table class="table stylish-table">
                                         <thead>
                                             <tr>
-                                                <th>Imagen</th>
-                                                <th>Nombre</th>
-                                                <th>Detalles</th>
-                                                <th>Precio</th>
+    <th>Imagen</th>
+    <th>Nombre</th>
+    <th>Sabores</th>
+    <th>Presentaciones</th>
+    <th>Detalles</th>
+    <th>Precio</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -23,6 +25,8 @@ Productos
         <td><span class="round round-warning">P</span></td>
         <td>
             <h6>{{$producto->nombre}}</h6><small class="text-muted">{{$producto->categoria_id}}</small></td>
+        <td>{{$producto->sabores}}</td>
+        <td>{{implode(',' , $producto->presentaciones)}}</td>
         <td>{{$producto->descripcion}}</td>
         <td>${{$producto->precio}}</td>
     </tr>

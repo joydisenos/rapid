@@ -19,8 +19,8 @@ class CreateProductosTable extends Migration
             $table->integer('categoria_id');
             $table->integer('user_id');
             $table->string('foto');
+            $table->string('sabores');
             $table->longText('descripcion');
-            $table->float('precio');
             $table->integer('estatus')->default(1);
             $table->timestamps();
         });

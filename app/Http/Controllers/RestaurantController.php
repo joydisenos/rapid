@@ -24,12 +24,16 @@ class RestaurantController extends Controller
         $producto->user_id = Auth::user()->id;
         $producto->foto = $request->foto;
         $producto->descripcion = $request->descripcion;
-        $producto->precio = $request->precio;
+        $producto->sabores = $request->sabores;
         $producto->save();
 
-        return redirect('productos')->with('status','Producto Agregado con éxito');
+        return redirect('producto/presentaciones'.'/'.$producto->id)->with('status','Producto Agregado con éxito');
+    }
+    public function presentaciones($id)
+    {
+        $producto = Producto::findOrFail($id);
 
-
+        return view('panel.presentaciones',compact('producto'));
     }
     public function ventas()
     {

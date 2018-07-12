@@ -123,15 +123,47 @@
           @foreach($productos as $producto)
           <div class="blog-block post-content-area">
             <img src="{{asset('img/negocio.jpg')}}">
+            
+            <form action="{{url('nueva/compra')}}" method="POST">
+               {{ csrf_field() }}
             <div class="blog-post">
-              <h3><a href="#">{{title_case($producto->user->name)}}</a></h3>
-              <div class="text-right">
-                <h6>Precio: ${{$producto->precio}}</h6>
+              <div class="text-center">
+                <h3><a href="">{{title_case($producto->nombre)}}</a></h3>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col">
+                  
+                  <label for="">Cantidad</label> 
+                </div>
+                <div class="col"><input type="number" class="form-control" width="100px">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col">
+                  <ul class="chips">
+                <?php $sabores = explode("," , $producto->sabores); ?>
+                @foreach($sabores as $i => $sabor)
+                <li><input type="radio" id="{{$producto->id}}sabor{{$i}}" name="sabores"> <label for="{{$producto->id}}sabor{{$i}}">{{title_case($sabor)}}</label></li>
+                @endforeach
+              </ul>
+                </div>
+                <div class="col">
+                  <ul class="chips">
+
+                @foreach($producto->presentaciones as $i => $presentacion)
+                <li><input type="radio" id="{{$producto->id}}presentacion{{$i}}" name="presentaciones"> <label for="{{$producto->id}}presentacion{{$i}}">{{title_case($presentacion)}}</label></li>
+                @endforeach
+              </ul>
+                </div>
               </div>
               <p>{{$producto->descripcion}}</p>
               <a href="#" class="btn btn-common">Detalles</a>
               <a href="#" class="btn btn-common"><i class="fa fa-shopping-cart"></i> Comprar</a>
             </div>
+            </form>
+
           </div>
 
           <div class="mb-60"></div>
