@@ -35,6 +35,7 @@ Route::group(['middleware'=> 'auth'],function(){
 	Route::get('/producto/nuevo', 'RestaurantController@nuevoproducto');
 	Route::post('/producto/nuevo', 'RestaurantController@storeproducto');
 	Route::get('/producto/presentaciones/{id}', 'RestaurantController@presentaciones');
+	Route::post('/presentacion/nuevo', 'RestaurantController@storepresentaciones');
 
 	Route::get('/ventas', 'RestaurantController@ventas');
   	

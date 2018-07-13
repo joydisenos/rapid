@@ -4,9 +4,10 @@ Agregar Presentaciones
 @endsection
 @section('content')
 <p>Agregue las presentaciones o tamaños junto con el precio del producto <strong>{{$producto->nombre}}</strong></p>
-<form action="">
+<form action="{{url('presentacion/nuevo')}}" method="post">
 	
 	{{ csrf_field() }}
+	<input type="hidden" value="{{$producto->id}}" name="producto_id">
 
 	<div class="container">
 		<div class="row">
@@ -32,6 +33,9 @@ Agregar Presentaciones
 		<hr>
 
 		<div class="row">
+			<div class="col-sm-4">
+				<a href="{{url('productos')}}" class="btn btn-outline-danger">Ir a Productos</a>
+			</div>
 			<div class="col">
 				<button type="submit" class="btn btn-danger">Agregar</button>
 			</div>
@@ -47,7 +51,7 @@ Agregar Presentaciones
 				<tbody>
 					@foreach($producto->presentaciones as $presentacion)
 					<tr>
-						<td>{{$presentacion->nombre}}</td>
+						<td>{{title_case($presentacion->presentacion)}}</td>
 						<td>{{$presentacion->precio}}</td>
 						<td><a href="#"><i class="fa fa-trash"></i></a></td>
 					</tr>

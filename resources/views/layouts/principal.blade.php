@@ -47,5 +47,6 @@
   <script src="{{asset('js/form-validator.min.js')}}"></script>
   <script src="{{asset('js/contact-form-script.js')}}"></script>
   <script src="{{asset('js/main.js')}}"></script>
+  @yield('scripts')
     </body>
 </html>

@@ -14,9 +14,14 @@
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Zona de Usuarios</a>
                     <div class="dropdown-menu">
                       <a class="dropdown-item" href="{{url('panel')}}">Panel</a>
-                      <a class="dropdown-item" href="#">Mis Datos</a>
-                      <a class="dropdown-item" href="#">Favoritos</a>
-                      <a class="dropdown-item" href="#">Cerrar Sesión</a>
+                      <a class="dropdown-item" href="{{url('perfil')}}">Mis Datos</a>
+                      <a class="dropdown-item" href="{{url('favoritos')}}">Favoritos</a>
+                      <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="dropdown-item">Cerrar Sesión</a>
+                                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
                     </div>
                 </li>
                     @else
@@ -122,7 +127,10 @@
         <div class="col-sm-12 col-md-9">
           @foreach($productos as $producto)
           <div class="blog-block post-content-area">
-            <img src="{{asset('img/negocio.jpg')}}">
+            @if($producto->foto == 'null')
+            @else
+            <img src="{{asset('storage').'/'.$producto->foto}}">
+            @endif
             
             <form action="{{url('nueva/compra')}}" method="POST">
                {{ csrf_field() }}
@@ -142,20 +150,24 @@
               <hr>
               <div class="row">
                 <div class="col">
-                  <ul class="chips">
+                 
                 <?php $sabores = explode("," , $producto->sabores); ?>
                 @foreach($sabores as $i => $sabor)
-                <li><input type="radio" id="{{$producto->id}}sabor{{$i}}" name="sabores"> <label for="{{$producto->id}}sabor{{$i}}">{{title_case($sabor)}}</label></li>
+                 <div class="radio">
+                   <label><input type="radio" id="{{$producto->id}}sabor{{$i}}" name="sabores"> {{title_case($sabor)}}</label>
+                 </div>
                 @endforeach
-              </ul>
+             
                 </div>
                 <div class="col">
-                  <ul class="chips">
+                  
 
                 @foreach($producto->presentaciones as $i => $presentacion)
-                <li><input type="radio" id="{{$producto->id}}presentacion{{$i}}" name="presentaciones"> <label for="{{$producto->id}}presentacion{{$i}}">{{title_case($presentacion)}}</label></li>
+                <div class="radio">
+                  <label for="{{$presentacion->id}}presentacion{{$i}}"><input type="radio" value="{{$presentacion->precio}}" id="{{$presentacion->id}}presentacion{{$i}}" name="presentaciones">{{title_case($presentacion->presentacion)}}</label>
+                </div>
                 @endforeach
-              </ul>
+              
                 </div>
               </div>
               <p>{{$producto->descripcion}}</p>

@@ -16,7 +16,7 @@ Productos
     <th>Sabores</th>
     <th>Presentaciones</th>
     <th>Detalles</th>
-    <th>Precio</th>
+    <th>Editar</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -26,9 +26,19 @@ Productos
         <td>
             <h6>{{$producto->nombre}}</h6><small class="text-muted">{{$producto->categoria_id}}</small></td>
         <td>{{$producto->sabores}}</td>
-        <td>{{implode(',' , $producto->presentaciones)}}</td>
+        <td>
+            
+            @if(count($producto->presentaciones))
+            <a href="{{url('producto/presentaciones').'/'.$producto->id}}"><i class="fa fa-edit"></i> Modificar</a> <br>
+            @foreach($producto->presentaciones as $presentacion)
+            {{$presentacion->presentacion}}, ${{$presentacion->precio}} <br>
+            @endforeach
+            @else
+            <a href="{{url('producto/presentaciones').'/'.$producto->id}}"><i class="fa fa-plus"></i> Agregar</a>
+            @endif
+        </td>
         <td>{{$producto->descripcion}}</td>
-        <td>${{$producto->precio}}</td>
+        <td><a href="#" class="btn btn-danger"><i class="fa fa-edit"></i> Editar</a></td>
     </tr>
     @endforeach
                                         </tbody>

@@ -3,12 +3,31 @@
 Agregar Producto
 @endsection
 @section('content')
-<form action="{{url('producto/nuevo')}}" method="POST">
+<form action="{{url('producto/nuevo')}}" method="POST" enctype="multipart/form-data">
 
 	 {{ csrf_field() }}
 	<input type="hidden" name="categoria_id" value="1">
 	<input type="hidden" name="foto" value="foto">
 	<div class="container">
+		
+
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-8">
+				<img src="" alt="Foto de producto" width="200" id="producto_prev">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<p>Foto</p>
+			</div>
+			<div class="col-md-8">
+				<input type="file" class="form-control" id="foto_producto" name="foto">
+			</div>
+		</div>
+
+		<hr>
+
 		<div class="row">
 			<div class="col-md-4">
 				<p>Nombre</p>
@@ -57,4 +76,24 @@ Agregar Producto
 		</div>
 	</div>
 </form>
+@endsection
+@section('scripts')
+<script>
+  function readURL(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#producto_prev').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#foto_producto").change(function() {
+  readURL(this);
+});
+</script>
 @endsection
