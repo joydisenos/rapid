@@ -39,6 +39,17 @@ Agregar Producto
 
 		<hr>
 
+		<div class="row">
+			<div class="col-md-4">
+				<p>Precio</p>
+			</div>
+			<div class="col-md-8">
+				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Nombre del producto" required>
+			</div>
+		</div>
+
+		<hr>
+
 		
 		<div class="row">
 			<div class="col-md-4">
@@ -67,6 +78,8 @@ Agregar Producto
 
 		<hr>
 
+		
+
 		<div class="row">
 			<div class="col-md-4">
 				<button type="submit" class="btn btn-primary">Guardar</button>
@@ -76,6 +89,9 @@ Agregar Producto
 		</div>
 	</div>
 </form>
+
+
+
 @endsection
 @section('scripts')
 <script>

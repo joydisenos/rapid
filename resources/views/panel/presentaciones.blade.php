@@ -1,9 +1,9 @@
 @extends('panel.principal')
 @section('titulo')
-Agregar Presentaciones
+Agregar Adicionales
 @endsection
 @section('content')
-<p>Agregue las presentaciones o tamaños junto con el precio del producto <strong>{{$producto->nombre}}</strong></p>
+<p>¿Desea agregar adicionales al producto <strong>{{$producto->nombre}}</strong>?</p>
 <form action="{{url('presentacion/nuevo')}}" method="post">
 	
 	{{ csrf_field() }}
@@ -12,7 +12,7 @@ Agregar Presentaciones
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-4">
-				<p>Presentación</p>
+				<p>Nombre</p>
 			</div>
 			<div class="col-sm-8">
 				<input type="text" name="nombre" class="form-control" placeholder="Nombre de la presentación" required>
@@ -26,7 +26,7 @@ Agregar Presentaciones
 				<p>Precio</p>
 			</div>
 			<div class="col-sm-8">
-				<input type="text" name="precio" class="form-control" placeholder="Nombre de la Precio" required>
+				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Nombre de la Precio" required>
 			</div>
 		</div>
 

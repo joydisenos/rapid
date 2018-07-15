@@ -65,54 +65,21 @@
       <section id="blog">
         <div class="container">
           <div id="posts-carousel" class="owl-carousel mt-3 mb-3">
+
+            @foreach($destacados as $destacado)
             <div class="blog block carousel-post">
               <img src="{{asset('img/carne.jpg')}}" alt="">
               <h5>Nombre del Restaurant</h5>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
+              <p>{{$destacado->ciudad}}</p>
               <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
             </div>
+            @endforeach
 
-            <div class="blog block carousel-post text-center">
-              <img src="{{asset('img/Fiesta.jpg')}}" alt="">
-              <h5>Nombre del Restaurant</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
-              <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-            
-            <div class="blog block carousel-post text-center">
-              <img src="{{asset('img/negocio.jpg')}}" alt="">
-              <h5>Nombre del Restaurant</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
-              <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-            
-            <div class="blog block carousel-post text-center">
-              <img src="{{asset('img/comidarapida.jpg')}}" alt="">
-              <h5>Nombre del Restaurant</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
-              <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
+        
 
-            <div class="blog block carousel-post text-center">
-              <img src="{{asset('img/pizza.jpg')}}" alt="">
-              <h5>Nombre del Restaurant</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
-              <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
 
-            <div class="blog block carousel-post text-center">
-              <img src="{{asset('img/pescado.jpg')}}" alt="">
-              <h5>Nombre del Restaurant</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
-              <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
-
-            <div class="blog block carousel-post text-center">
-              <img src="{{asset('img/club.jpg')}}" alt="">
-              <h5>Nombre del Restaurant</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet atque fugit vitae voluptatem...</p>
-              <a href="#">Visitar <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-            </div>
+           
 
           </div>
         </div>
@@ -125,59 +92,44 @@
       <div class="row">
         
         <div class="col-sm-12 col-md-9">
-          @foreach($productos as $producto)
+          @foreach($restaurantes as $restaurant)
           <div class="blog-block post-content-area">
-            @if($producto->foto == 'null')
-            @else
-            <img src="{{asset('storage').'/'.$producto->foto}}">
-            @endif
             
+           
             <form action="{{url('nueva/compra')}}" method="POST">
                {{ csrf_field() }}
             <div class="blog-post">
-              <div class="text-center">
-                <h3><a href="">{{title_case($producto->nombre)}}</a></h3>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col">
-                  
-                  <label for="">Cantidad</label> 
-                </div>
-                <div class="col"><input type="number" class="form-control" width="100px">
-                </div>
-              </div>
-              <hr>
-              <div class="row">
-                <div class="col">
-                 
-                <?php $sabores = explode("," , $producto->sabores); ?>
-                @foreach($sabores as $i => $sabor)
-                 <div class="radio">
-                   <label><input type="radio" id="{{$producto->id}}sabor{{$i}}" name="sabores"> {{title_case($sabor)}}</label>
-                 </div>
-                @endforeach
-             
-                </div>
-                <div class="col">
-                  
-
-                @foreach($producto->presentaciones as $i => $presentacion)
-                <div class="radio">
-                  <label for="{{$presentacion->id}}presentacion{{$i}}"><input type="radio" value="{{$presentacion->precio}}" id="{{$presentacion->id}}presentacion{{$i}}" name="presentaciones">{{title_case($presentacion->presentacion)}}</label>
-                </div>
-                @endforeach
               
+              
+              <div class="row">
+
+                <div class="col-sm-4">
+                  <img src="{{asset('img/logo.jpg')}}" class="img-fluid" alt="">
                 </div>
+                <div class="col">
+                  <div class="text-center">
+                <h3><a href="">Nombre del Restaurant</a></h3>
               </div>
-              <p>{{$producto->descripcion}}</p>
-              <a href="#" class="btn btn-common">Detalles</a>
-              <a href="#" class="btn btn-common"><i class="fa fa-shopping-cart"></i> Comprar</a>
+                  <p>Parrillas, Hamburguesas, Perros Calientes</p>
+                  <p>Descripcion de restaurant</p>
+                  <p><strong>{{title_case($restaurant->ciudad)}}</strong></p>
+
+                  <a href="#" class="btn btn-common">Visitar</a>
+                  
+                </div>
+               
+              </div>
+            
+             
+              
+              
+              
+              
             </div>
             </form>
 
           </div>
-
+<hr>
           <div class="mb-60"></div>
           @endforeach
 
@@ -226,26 +178,13 @@
               <h4>Más Comprados</h4>
             </div>
             <div class="blog-posts-small">
+              @foreach($productos as $producto)
               <div class="blog-post-small first-post">
                 <img src="{{asset('img/panes.jpg')}}">
-                <a href="#">Pan con ajonjolí</a>
+                <a href="#">{{title_case($producto->nombre)}}</a>
                 <p>vendidos <a href="#" class="post-date">900</a></p>
               </div>
-              <div class="blog-post-small first-post">
-                <img src="{{asset('img/panes.jpg')}}">
-                <a href="#">Pan con ajonjolí</a>
-                <p>vendidos <a href="#" class="post-date">900</a></p>
-              </div>
-              <div class="blog-post-small first-post">
-                <img src="{{asset('img/panes.jpg')}}">
-                <a href="#">Pan con ajonjolí</a>
-                <p>vendidos <a href="#" class="post-date">900</a></p>
-              </div>
-              <div class="blog-post-small first-post">
-                <img src="{{asset('img/panes.jpg')}}">
-                <a href="#">Pan con ajonjolí</a>
-                <p>vendidos <a href="#" class="post-date">900</a></p>
-              </div>
+            @endforeach
             </div>
           </div>
         </div>

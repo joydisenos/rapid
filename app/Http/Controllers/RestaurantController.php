@@ -36,6 +36,7 @@ class RestaurantController extends Controller
         $producto->foto = 'null';
         }
         $producto->nombre = $request->nombre;
+        $producto->precio = $request->precio;
         $producto->categoria_id = $request->categoria_id;
         $producto->user_id = Auth::user()->id;
         $producto->descripcion = $request->descripcion;

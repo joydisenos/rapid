@@ -104,7 +104,7 @@
                             <a href="{{url('perfil')}}" class="waves-effect"><i class="fa fa-user m-r-10" aria-hidden="true"></i>Perfil</a>
                         </li>
                         <li>
-                            <a href="{{url('compras')}}" class="waves-effect"><i class="fa fa-table m-r-10" aria-hidden="true"></i>Compras</a>
+                            <a href="{{url('compras')}}" class="waves-effect"><i class="fa fa-table m-r-10" aria-hidden="true"></i>Mis Compras</a>
                         </li>
                         <li>
                             <a href="{{url('favoritos')}}" class="waves-effect"><i class="fa fa-star m-r-10" aria-hidden="true"></i>Favoritos</a>

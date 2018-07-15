@@ -1,0 +1,56 @@
+<div class="col-sm-12 col-md-9">
+          @foreach($productos as $producto)
+          <div class="blog-block post-content-area">
+            @if($producto->foto == 'null')
+            @else
+            <img src="{{asset('storage').'/'.$producto->foto}}">
+            @endif
+            
+            <form action="{{url('nueva/compra')}}" method="POST">
+               {{ csrf_field() }}
+            <div class="blog-post">
+              <div class="text-center">
+                <h3><a href="">{{title_case($producto->nombre)}}</a></h3>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col">
+                  
+                  <label for="">Cantidad</label> 
+                </div>
+                <div class="col"><input type="number" class="form-control" width="100px">
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col">
+                 
+                <?php $sabores = explode("," , $producto->sabores); ?>
+                @foreach($sabores as $i => $sabor)
+                 <div class="radio">
+                   <label><input type="radio" id="{{$producto->id}}sabor{{$i}}" name="sabores"> {{title_case($sabor)}}</label>
+                 </div>
+                @endforeach
+             
+                </div>
+                <div class="col">
+                  
+
+                @foreach($producto->presentaciones as $i => $presentacion)
+                <div class="radio">
+                  <label for="{{$presentacion->id}}presentacion{{$i}}"><input type="radio" value="{{$presentacion->precio}}" id="{{$presentacion->id}}presentacion{{$i}}" name="presentaciones">{{title_case($presentacion->presentacion)}}</label>
+                </div>
+                @endforeach
+              
+                </div>
+              </div>
+              <p>{{$producto->descripcion}}</p>
+              <a href="#" class="btn btn-common">Detalles</a>
+              <a href="#" class="btn btn-common"><i class="fa fa-shopping-cart"></i> Comprar</a>
+            </div>
+            </form>
+
+          </div>
+
+          <div class="mb-60"></div>
+          @endforeach

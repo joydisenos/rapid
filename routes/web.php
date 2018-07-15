@@ -22,6 +22,8 @@ Route::group(['middleware'=> 'auth'],function(){
 	Route::get('/perfil', 'UserController@perfil');
 	Route::get('/compras', 'UserController@compras');
 	Route::get('/favoritos', 'UserController@favoritos');
+	Route::post('/direccion/nueva', 'UserController@storedireccion');
+	Route::post('/actualizar/usuario', 'UserController@actualizar');
 	
   	
 });
