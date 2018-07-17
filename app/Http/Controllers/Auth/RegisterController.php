@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/panel';
+    protected $redirectTo = '/perfil';
 
     /**
      * Create a new controller instance.
@@ -60,7 +60,7 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
+     *  
      * @param  array  $data
      * @return \App\User
      */
@@ -72,6 +72,12 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'apellido' => $data['apellido'],
             'telefono' => $data['telefono'],
+            'nombre_del_restaurante' => '',
+            'descripcion' => '',
+            'logo' => '',
+            'slug' => '',
+            'categorias' => '',
+            'direccion' => '',
             'ciudad' => $data['ciudad'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

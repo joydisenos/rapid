@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('apellido');
             $table->string('telefono');
-            $table->string('nombre_rest');
-            $table->string('nombre_rest');
+            $table->string('nombre_del_restaurante');
+            $table->string('descripcion');
             $table->string('logo');
             $table->string('slug');
             $table->string('categorias');

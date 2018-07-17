@@ -18,4 +18,11 @@ class SiteController extends Controller
 
     	return view('welcome',compact('restaurantes','productos','destacados'));
     }
+
+    public function rest($slug)
+    {
+    	$restaurant = User::where('slug','=',$slug)->first();
+
+    	return view('menu',compact('restaurant'));
+    }
 }

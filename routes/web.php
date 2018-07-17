@@ -15,6 +15,7 @@ Route::get('/','SiteController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/restaurant/{slug}', 'SiteController@rest');
 
 Route::group(['middleware'=> 'auth'],function(){
 	

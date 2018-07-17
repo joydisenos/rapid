@@ -46,12 +46,12 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{url('/')}}">
+                    <a class="navbar-brand hidden-sm-down" href="{{url('/')}}">
                         <!-- Logo icon -->
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="http://www.rapidelly.com/logo.png" alt="rapidelly" class="dark-logo img-fluid mt-2" style="filter:invert(100%);max-width: 70%;" />
+                            <img src="http://www.rapidelly.com/logo.png" alt="rapidelly" class="dark-logo img-fluid mt-2" style="filter:invert(100%);max-width: 70%;"/>
                             
                         </b>
                         <!--End Logo icon -->
@@ -67,7 +67,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav mr-auto mt-md-0 ">
                         <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-sm-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
                         <li class="nav-item hidden-sm-down">
                             <!--<form class="app-search p-l-20">
                                 <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a>
@@ -79,7 +79,13 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="usuario" class="profile-pic m-r-5" />{{title_case(Auth::user()->name)}}</a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                @if(Auth::user()->logo == '')
+                                @else
+                                <img src="{{asset('storage').'/'. Auth::user()->logo}}" alt="usuario" class="profile-pic m-r-5" />
+                                @endif
+                                {{title_case(Auth::user()->name)}}</a>
                         </li>
                     </ul>
                 </div>
@@ -103,18 +109,36 @@
                         <li>
                             <a href="{{url('perfil')}}" class="waves-effect"><i class="fa fa-user m-r-10" aria-hidden="true"></i>Perfil</a>
                         </li>
+                        
+
+                        @if(Auth::user()->tipo == 1)
                         <li>
                             <a href="{{url('compras')}}" class="waves-effect"><i class="fa fa-table m-r-10" aria-hidden="true"></i>Mis Compras</a>
                         </li>
                         <li>
                             <a href="{{url('favoritos')}}" class="waves-effect"><i class="fa fa-star m-r-10" aria-hidden="true"></i>Favoritos</a>
                         </li>
+                        @endif
+
+                        @if(Auth::user()->tipo == 2)
                         <li>
                             <a href="{{url('productos')}}" class="waves-effect"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>Productos</a>
                         </li>
                         <li>
                             <a href="{{url('ventas')}}" class="waves-effect"><i class="fa fa-columns m-r-10" aria-hidden="true"></i>Ventas</a>
                         </li>
+                        @endif
+
+
+                        <li>
+                            <a a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" class="waves-effect"><i class="fa fa-sign-out m-r-10" aria-hidden="true"></i>Cerrar Sesión</a>
+                        </li>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
                         
                     </ul>
                     

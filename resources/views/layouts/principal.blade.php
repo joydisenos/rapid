@@ -7,9 +7,7 @@
 
         <title>Rapidelly</title>
 
-        <!-- Fonts -->
-       <link rel="stylesheet" href="{{('css/font-awesome.min.css')}}">
-
+   
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
@@ -17,6 +15,10 @@
         <link rel="stylesheet" href="{{asset('css/owl.carousel.css')}}">
         <link rel="stylesheet" href="{{asset('css/owl.theme.css')}}">
         <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+
+             <!-- Fonts -->
+       <link rel="stylesheet" href="{{('css/font-awesome.min.css')}}">
+
 
     </head>
     <body>

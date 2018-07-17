@@ -20,6 +20,20 @@ class RestaurantController extends Controller
     public function storeproducto(Request $request)
     {
 
+        
+
+        
+        $validatedData = $request->validate([
+                'nombre' => 'required|string|min:3',
+                'precio' => 'required|numeric',
+                ]);
+        if ($request->hasFile('foto'))
+        {
+            $validatedData = $request->validate([
+                'foto' => 'image',
+                ]);
+        }
+
         if ($request->hasFile('foto')) 
         {
         $file = $request->file('foto');
@@ -29,21 +43,60 @@ class RestaurantController extends Controller
 
 
         $producto = new Producto();
+        
         if ($request->hasFile('foto')) 
         {
         $producto->foto = $nombre;
         }else{
-        $producto->foto = 'null';
+        $producto->foto = '';
         }
+        
         $producto->nombre = $request->nombre;
+        
         $producto->precio = $request->precio;
+        
         $producto->categoria_id = $request->categoria_id;
+        
         $producto->user_id = Auth::user()->id;
-        $producto->descripcion = $request->descripcion;
-        $producto->sabores = $request->sabores;
+        
+        if($request->descripcion == '')
+        {
+            $producto->descripcion = '';
+        }else{
+            $producto->descripcion = $request->descripcion;    
+        }
+        if($request->sabores == ''){
+            $producto->sabores = '';    
+        }else{
+            $producto->sabores = $request->sabores;
+        }
         $producto->save();
 
-        return redirect('producto/presentaciones'.'/'.$producto->id)->with('status','Producto Agregado con éxito');
+
+        
+
+        if ($request->adicional == '')
+        {}
+        else 
+        {
+
+            $adicionales = array_combine($request->adicional,$request->precio_adicional);
+
+            foreach($adicionales as $adicional => $adicional_precio)
+            {
+                $presentacion = new Presentacion();
+                $presentacion->producto_id = $producto->id;
+                $presentacion->presentacion = $adicional;
+                $presentacion->precio = $adicional_precio;
+                $presentacion->save();
+            }
+            
+        }
+       
+
+
+
+        return redirect('productos')->with('status','Producto Agregado con éxito');
     }
     public function presentaciones($id)
     {

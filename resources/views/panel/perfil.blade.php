@@ -7,7 +7,16 @@ Perfil
 
                             <div class="row">
                                 <div class="col-md-6">
-                                	<center class="m-t-30"> <img src="{{asset('img/Fiesta.jpg')}}" width="150" />
+                                	<center class="m-t-30"> 
+
+                                        @if(Auth::user()->logo == '')
+                                        <img src="{{asset('img/Fiesta.jpg')}}" id="perfil_prev" width="150" />
+                                        @else
+                                        <img src="{{asset('storage').'/'. Auth::user()->logo}}" id="perfil_prev" width="150" />
+                                        @endif
+
+
+
                                     <h4 class="card-title m-t-10">{{title_case(Auth::user()->name)}} {{title_case(Auth::user()->apellido)}}</h4>
                                     <h6 class="card-subtitle">Registrado como 
 
@@ -25,15 +34,63 @@ Perfil
                                 </div>
                                 <div class="col-md-6">
 
-                                	<form action="{{url('/actualizar/usuario')}}" method="post" class="form-horizontal form-material">
+                                	<form action="{{url('/actualizar/usuario')}}" method="post" class="form-horizontal form-material" enctype="multipart/form-data">
                                     {{ csrf_field() }}
-                                    
+
+                                    @if(Auth::user()->tipo == 2)
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Nombre del Restaurante</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="{{Auth::user()->nombre_del_restaurante}}" placeholder="Nombre del Restaurant" name="nombre_del_restaurante" class="form-control form-control-line" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Descripción del Restaurante</label>
+                                        <div class="col-md-12">
+                                            <input type="text" value="{{Auth::user()->descripcion}}" placeholder="Descripción del Restaurant" name="descripcion" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Logo</label>
+                                        <div class="col-md-12">
+                                            <input type="file" name="logo" id="perfil" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Dirección</label>
+                                        <div class="col-md-12">
+                                            <textarea rows="5" class="form-control form-control-line" name="direccion">{{Auth::user()->direccion}}</textarea>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-md-12">Número de Teléfono</label>
                                         <div class="col-md-12">
                                             <input type="number" value="{{Auth::user()->telefono}}" name="telefono" class="form-control form-control-line" required>
                                         </div>
                                     </div>
+
+                                    @else
+                                    
+                                    <div class="form-group">
+                                        <label class="col-md-12">Imagen de perfil</label>
+                                        <div class="col-md-12">
+                                            <input type="file" name="logo" id="perfil" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Número de Teléfono</label>
+                                        <div class="col-md-12">
+                                            <input type="number" value="{{Auth::user()->telefono}}" name="telefono" class="form-control form-control-line" required>
+                                        </div>
+                                    </div>
+
+                                    @endif
                                     <!--
 									<div class="form-group">
                                         <label class="col-md-12">Message</label>
@@ -79,6 +136,8 @@ Perfil
 <div class="row">
     <div class="col-md-12">
 
+
+@if(Auth::user()->tipo== 1)
         <div class="text-right">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#direccion">
  <i class="fa fa-plus"></i> Agregar Dirección
@@ -104,7 +163,11 @@ Perfil
                                         </tbody>
                                     </table>
                                 </div>
-                                </div>
+@endif
+
+
+
+        </div>
                             </div>
     
 
@@ -174,4 +237,24 @@ Perfil
     </div>
   </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+  function readURL(input) {
+
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+      $('#perfil_prev').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+$("#perfil").change(function() {
+  readURL(this);
+});
+</script>
 @endsection

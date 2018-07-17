@@ -14,7 +14,7 @@ Agregar Producto
 		<div class="row">
 			<div class="col-md-4"></div>
 			<div class="col-md-8">
-				<img src="" alt="Foto de producto" width="200" id="producto_prev">
+				<img src="{{asset('storage/restaurant.png')}}" alt="Foto de producto" width="200" id="producto_prev">
 			</div>
 		</div>
 		<div class="row">
@@ -44,7 +44,7 @@ Agregar Producto
 				<p>Precio</p>
 			</div>
 			<div class="col-md-8">
-				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Nombre del producto" required>
+				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Precio del producto" required>
 			</div>
 		</div>
 
@@ -57,7 +57,7 @@ Agregar Producto
 			</div>
 			<div class="col-md-8">
 				
-					<input type="text" id="sabores" name="sabores" class="form-control">
+					<input type="text" id="sabores" name="sabores" class="form-control" placeholder="(opcional) sabores separados por coma ','">
 				
 
 			</div>
@@ -78,6 +78,24 @@ Agregar Producto
 
 		<hr>
 
+		<div class="row">
+			<div class="col-md-4">
+				¿Desea agregar adicionales a su producto?
+			</div>
+			<div class="col-md-8">
+				<button type="button" class="btn btn-primary" id="adicionales">
+ 				Agregar adicionales
+				</button>
+			</div>
+		</div>
+
+		<hr>
+
+		<div class="agregar">
+			
+		</div>
+
+		
 		
 
 		<div class="row">
@@ -111,5 +129,12 @@ Agregar Producto
 $("#foto_producto").change(function() {
   readURL(this);
 });
+
+var form = " <div class='row'><div class='col-md-4'><p>Adicional</p></div><div class='col-md-4'><input type='text' name='adicional[]' class='form-control' placeholder='Nombre'></div><div class='col-md-4'><input type='number' step='0.5' name='precio_adicional[]' class='form-control' placeholder='Precio'></div></div> "
+
+$('#adicionales').click(function(){
+	$('.agregar').append(form);
+});
+
 </script>
 @endsection

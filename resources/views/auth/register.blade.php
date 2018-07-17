@@ -60,7 +60,7 @@
                             <label for="telefono" class="col-md-4 control-label">Teléfono</label>
 
                             <div class="col-md-6">
-                                <input id="telefono" type="text" class="form-control" name="telefono" value="{{ old('telefono') }}" required>
+                                <input id="telefono" type="number" class="form-control" name="telefono" value="{{ old('telefono') }}" required>
 
                                 @if ($errors->has('telefono'))
                                     <span class="help-block">

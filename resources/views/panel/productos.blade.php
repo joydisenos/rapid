@@ -14,7 +14,8 @@ Productos
     <th>Imagen</th>
     <th>Nombre</th>
     <th>Sabores</th>
-    <th>Presentaciones</th>
+    <th>Precio</th>
+    <th>Adicionales</th>
     <th>Detalles</th>
     <th>Editar</th>
                                             </tr>
@@ -26,6 +27,7 @@ Productos
         <td>
             <h6>{{$producto->nombre}}</h6><small class="text-muted">{{$producto->categoria_id}}</small></td>
         <td>{{$producto->sabores}}</td>
+        <td>${{$producto->precio}}</td>
         <td>
             
             @if(count($producto->presentaciones))
