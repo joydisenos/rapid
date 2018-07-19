@@ -25,4 +25,13 @@ class SiteController extends Controller
 
     	return view('menu',compact('restaurant'));
     }
+
+    public function ciudad(Request $request)
+    {
+        $restaurantes = User::where('tipo','=',2)->get();
+        $productos = Producto::where('estatus','=',1)->take(5)->get();
+        $destacados = User::where('tipo','=',2)->take(6)->get();
+
+        return view('restaurantes',compact('restaurantes','productos','destacados'));
+    }
 }

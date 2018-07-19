@@ -41,6 +41,8 @@ Agregar Adicionales
 			</div>
 		</div>
 
+		</form>
+
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
@@ -61,5 +63,5 @@ Agregar Adicionales
 		</div>
 	</div>
 	
-</form>
+
 @endsection

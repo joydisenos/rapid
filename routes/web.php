@@ -12,6 +12,9 @@
 */
 
 Route::get('/','SiteController@index');
+Route::post('/restaurantes','SiteController@ciudad');
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -42,4 +45,17 @@ Route::group(['middleware'=> 'auth'],function(){
 
 	Route::get('/ventas', 'RestaurantController@ventas');
   	
+});
+
+Route::group(['middleware'=> 'auth'],function(){
+	Route::prefix('admin')->group(function () {
+
+    Route::get('/', 'AdminController@index');
+    Route::get('/usuarios', 'AdminController@usuarios');
+    Route::get('/categorias', 'AdminController@categorias');
+    Route::get('borrar/categoria/{id}', 'AdminController@borrarcategoria');
+    Route::get('/ciudades', 'AdminController@ciudades');
+    Route::post('/categoria', 'AdminController@storecategoria');
+
+});  	
 });

@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 
              <!-- Fonts -->
-       <link rel="stylesheet" href="{{('css/font-awesome.min.css')}}">
+       <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
 
 
     </head>

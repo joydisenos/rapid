@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Pedi comida a domicilio con Rapidelly.com">
+    <meta name="author" content="Rapidelly.com">
+	<link rel="icon" href="/favicon.png" />
+
+    <title>Rapidelly.com - Pedi comida online</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/business-frontpage.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/index.html"><img src="../logo.png" width="100px" height="auto"/></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/index.html">Inicio
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+	<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-bottom d-block d-sm-none">
+      <div class="container">
+		<small><font color="white">Este navbar mostrar cuando agreguen algo al carrito sino, no mostrarlo</font></small>
+		<button class="btn btn-warning" style="width:100%;" data-toggle="modal" data-target="#carrito"><font color="white"><i class="fas fa-concierge-bell"></i> Ver pedido ()</font></button>
+
+	  </div>
+    </nav>
+    
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <BR>
+		  <div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Nombre del restaurante seleccionado <span class="badge badge-success">Abierto</span> o <span class="badge badge-danger">Cerrado</span></h5>
+					<small><i class="fas fa-map-marker-alt"></i> Direccion del restaurante - Categoria del restaurante</small><br>
+					<small><b>Tipo de envio:</b> (Delivery) - (TakeAway) - (Delivery + TakeAway)</small><br>
+					<small><b>Costo de envio:</b> Si realiza envios colocar aqui el costo envio (Si el costo es fijo mostrar el precio sino colocar "costo según zona"</small>
+				</div>
+		</div>
+		<hr>
+		
+        </div>
+        <div class="col-md-8">
+		
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Menú</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Informacion</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Opiniones (578)</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+<br> 
+ <b>Categoria por ejemplo (HAMBURGUESAS)</b>
+ <hr>
+	<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+
+<hr>
+
+<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+
+
+
+<br>
+<hr>
+	<b>Sandwiches</b>
+<hr>
+	<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+
+<hr>
+<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+	
+	<hr>
+	<b>Helados</b>
+<hr>
+	<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+
+<hr>
+<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+	
+	<hr>
+	<b>Postres</b>
+<hr>
+	<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+
+<hr>
+<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+	
+	<hr>
+	<b>Bebidas</b>
+<hr>
+	<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+
+<hr>
+<div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+					<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+					<small>Descripcion del producto - breve..</small><br>
+					<small><b>Precio del producto $50</b></small>
+				</div>
+				<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#exampleModal"><b>+</b></button>
+	</div>
+	
+	<hr>
+
+	
+
+	
+  </div>
+  
+  
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <b>Informacion del restaurante</b>
+  
+  <p>Direccion - Ciudad - Telefono y Horario aqui</p>
+  </div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+  <b>Opiniones de los usuarios aqui</b>
+  <p>Aqui puede ir la opinion de los usuarios sobre este restaurante, (esto podes sacarlo si queres, o dejarlo para implementarlo despues)</p>
+  </div>
+</div>
+		
+		</div>
+		 
+		 
+		 <div class="col-md-4 d-none d-sm-block">
+			<p><b>Mi Pedido</b></p>
+			<center><h4>Su pedido vacio <br>¿Con hambre?</h4>
+			<p class="lead">Agregá lo que quieras pedir. [Mostrar asi en version PC].</p>
+			</center>
+			<a class="btn btn-warning" style="width:100%;" href="/checkout.html" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
+			
+		<hr> 
+		 </div>
+		 
+		 
+		
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+	  
+        <div class="media">
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+				<div class="media-body">
+				<h5 class="mt-0">Titulo - Producto con/sin imagen</h5>
+				<small>Descripcion del producto - small ..</small><br>
+					
+				</div>
+				
+	</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	  <small>Si tiene sabores mostrar aqui</small><br>
+	  <div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" id="customCheck1">
+				<label class="custom-control-label" for="customCheck1">Sabor 1</label>
+		</div>
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" id="customCheck2">
+				<label class="custom-control-label" for="customCheck2">Sabor 2</label>
+		</div>
+		
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" id="customCheck3">
+				<label class="custom-control-label" for="customCheck3">Sabor 3</label>
+		</div>
+	  <small>Si tiene Adicionales mostrar aqui</small>
+		
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" id="customCheck4">
+				<label class="custom-control-label" for="customCheck4">Adicional 1 + $Precioadicional</label>
+		</div>
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" id="customCheck5">
+				<label class="custom-control-label" for="customCheck5">Adicional 2 + $Precioadicional</label>
+		</div>
+		
+		<div class="custom-control custom-checkbox">
+			<input type="checkbox" class="custom-control-input" id="customCheck6">
+				<label class="custom-control-label" for="customCheck6">Adicional 3 $Precioadicional</label>
+		</div>
+		
+
+		<hr>
+		
+	<small>Si no tiene sabores ni adicionales mostrar un select para saber que cantidad de este producto desea *El select mostrarlo igual para saber cuantos productos desea tenga o no sabores/adicionales</small>
+	
+	<select class="custom-select">
+		<option selected>Seleccionar cantidad</option>
+		<option value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+	</select>
+	<hr>
+	<div class="form-group">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="Agregar aclaraciones"></textarea>
+  </div>
+		
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning">Agregar ($Precio este modal)</button>
+      </div>
+	  
+    
+	
+</div>
+	
+  </div>
+</div>
+
+
+<!-- Modal carrito -->
+<div class="modal fade" id="carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+			<p><b>Mi pedido</b></p> 
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+      </div>
+      
+	 <div class="modal-body">
+			<center><h4>Su pedido vacio <br>¿Con hambre?</h4>
+			<p class="lead">Agregá lo que quieras pedir. [Mostrar asi en version movil].</p>
+			</center>
+	</div>
+    
+	<div class="modal-footer">
+        <a class="btn btn-default" style="width:100%;" data-dismiss="modal" role="button">Volver al menu</a>
+		<a class="btn btn-warning" style="width:100%;" href="/checkout.html" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
+		
+      </div>
+<center><small>Si no hay nada en el carrito colocar el boton continuar como "disabled"</small>	  </center>
+    
+	
+</div>
+	
+  </div>
+</div>
+
+		
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <span class="text-muted text-center">Rapidelly.com - 2018 - Argentina</span>
+		<br>
+		<img src="../logo.png" width="150px" height="auto"/>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
