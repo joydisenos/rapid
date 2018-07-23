@@ -3,6 +3,10 @@
 Admin Usuarios
 @endsection
 @section('content')
+
+
+
+
 <div class="table-responsive m-t-40">
                                     <table class="table stylish-table">
                                         <thead>

@@ -23,7 +23,13 @@ Productos
                                         <tbody>
     @foreach(Auth::user()->productos as $producto)
     <tr>
-        <td><span class="round round-warning">P</span></td>
+        <td>
+            @if($producto->foto == '')
+            <span class="round round-warning">P</span>
+            @else
+            <img src="{{asset('storage').'/'.$producto->foto}}" class="img-fluid" alt="{{$producto->nombre}}">
+            @endif
+        </td>
         <td>
             <h6>{{$producto->nombre}}</h6><small class="text-muted">{{$producto->categoria_id}}</small></td>
         <td>{{$producto->sabores}}</td>
@@ -40,7 +46,7 @@ Productos
             @endif
         </td>
         <td>{{$producto->descripcion}}</td>
-        <td><a href="#" class="btn btn-danger"><i class="fa fa-edit"></i> Editar</a></td>
+        <td><a href="{{url('producto/edit').'/'.$producto->id}}" class="btn btn-danger"><i class="fa fa-edit"></i> Editar</a></td>
     </tr>
     @endforeach
                                         </tbody>

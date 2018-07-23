@@ -46,6 +46,8 @@ Perfil
                                         </div>
                                     </div>
 
+                                    
+
                                     <div class="form-group">
                                         <label class="col-md-12">Descripción del Restaurante</label>
                                         <div class="col-md-12">

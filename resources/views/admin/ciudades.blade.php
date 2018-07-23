@@ -3,7 +3,7 @@
 Admin Ciudades
 @endsection
 @section('content')
-<form action="#" method="post">
+<form action="{{url('admin/ciudad')}}" method="post">
 	
 	{{ csrf_field() }}
 	
@@ -14,7 +14,7 @@ Admin Ciudades
 				<p>Ciudad</p>
 			</div>
 			<div class="col-sm-8">
-				<input type="text" name="ciudad" class="form-control" placeholder="Nombre de la ciudad" required>
+				<input type="text" name="nombre" class="form-control" placeholder="Nombre de la ciudad" required>
 			</div>
 		</div>
 
@@ -38,7 +38,12 @@ Admin Ciudades
 					<th>Eliminar</th>
 				</thead>
 				<tbody>
-					
+					@foreach($ciudades as $ciudad)
+					<tr>
+						<td>{{$ciudad->nombre}}</td>
+						<td> <a href="{{url('admin/borrar/ciudad').'/'.$ciudad->id}}"><i class="fa fa-minus"></i></a> </td>
+					</tr>
+					@endforeach
 				</tbody>
 			</table>
 		</div>

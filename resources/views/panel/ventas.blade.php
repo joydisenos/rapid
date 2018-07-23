@@ -18,14 +18,7 @@ Ventas
                                         </thead>
                                         <tbody>
                                             
-                                            <tr>
-                                                <td>4</td>
-                                                <td>
-                                                    <h6>Hamburguesas</h6><small class="text-muted">Comida rápida</small></td>
-                                                <td>Comida Rápida</td>
-                                                <td>$125</td>
-                                                <td>Por Entregar</td>
-                                            </tr>
+                                           
                                             <tr>
                                                 <td>6</td>
                                                 <td>

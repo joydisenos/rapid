@@ -12,12 +12,9 @@
                       <form action="{{url('/restaurantes')}}"  method="post">
                          {{ csrf_field() }}
                       <select name="ciudad" id="" class="form-control">
-                          <option value="1">Buenos Aires</option>
-                          <option value="2">Córdoba</option>
-                          <option value="3">Rosario</option>
-                          <option value="4">Salta</option>
-                          <option value="5">Santa Fé</option>
-                          <option value="6">San Juan</option>
+                          @foreach($ciudades as $ciudad)
+                          <option value="{{$ciudad->id}}">{{$ciudad->nombre}}</option>
+                          @endforeach
                       </select>
                       <button type="submit" class="page-scroll btn btn-lg btn-default-filled animated fadeInUp">Buscar</button>
                       </form>

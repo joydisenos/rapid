@@ -4,7 +4,7 @@ Agregar Adicionales
 @endsection
 @section('content')
 <p>¿Desea agregar adicionales al producto <strong>{{$producto->nombre}}</strong>?</p>
-<form action="{{url('presentacion/nuevo')}}" method="post">
+<form action="{{url('presentacion/nuevo')}}" method="post" class="form-horizontal form-material">
 	
 	{{ csrf_field() }}
 	<input type="hidden" value="{{$producto->id}}" name="producto_id">
@@ -26,7 +26,7 @@ Agregar Adicionales
 				<p>Precio</p>
 			</div>
 			<div class="col-sm-8">
-				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Nombre de la Precio" required>
+				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Precio adicional" required>
 			</div>
 		</div>
 
@@ -55,7 +55,7 @@ Agregar Adicionales
 					<tr>
 						<td>{{title_case($presentacion->presentacion)}}</td>
 						<td>{{$presentacion->precio}}</td>
-						<td><a href="#"><i class="fa fa-trash"></i></a></td>
+						<td><a href="{{url('presentacion/del').'/'.$presentacion->id}}"><i class="fa fa-trash"></i></a></td>
 					</tr>
 					@endforeach
 				</tbody>

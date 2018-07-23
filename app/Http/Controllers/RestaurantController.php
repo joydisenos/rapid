@@ -17,6 +17,48 @@ class RestaurantController extends Controller
     {
     	return view('panel.nuevoproducto');
     }
+    public function showproducto($id)
+    {
+        $producto = Producto::findOrFail($id);
+        return view('panel.editarproducto',compact('producto'));
+    }
+
+    public function actualizarproducto($id, Request $request)
+    {
+
+         $validatedData = $request->validate([
+                'nombre' => 'required|string|min:3',
+                'precio' => 'required|numeric',
+                ]);
+        if ($request->hasFile('foto'))
+        {
+            $validatedData = $request->validate([
+                'foto' => 'image',
+                ]);
+        }
+
+        if ($request->hasFile('foto')) 
+        {
+        $file = $request->file('foto');
+        $nombre = $file->getClientOriginalName();
+        \Storage::disk('public')->put($nombre,  \File::get($file));
+        }
+
+
+        $producto = Producto::findOrFail($id);
+        if ($request->hasFile('foto')) 
+        {
+        $producto->foto = $nombre;
+        }
+        $producto->nombre = $request->nombre;
+        $producto->precio = $request->precio;
+        $producto->sabores = $request->sabores;
+        $producto->descripcion = $request->descripcion;
+        $producto->save();
+
+        return redirect('productos')->with('status','Producto editado correctamente');
+
+    }
     public function storeproducto(Request $request)
     {
 
@@ -114,6 +156,13 @@ class RestaurantController extends Controller
 
         return redirect()->back()->with('status','Presentación Agregado con éxito');
 
+    }
+    public function borrarpresentaciones ($id)
+    {
+        $presentacion = Presentacion::findOrFail($id);
+        $presentacion->delete();
+
+        return redirect()->back()->with('status','Adicional eliminado correctamente');
     }
     public function ventas()
     {

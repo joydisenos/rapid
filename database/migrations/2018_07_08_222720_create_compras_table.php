@@ -20,6 +20,9 @@ class CreateComprasTable extends Migration
             $table->integer('restaurant_id');
             $table->integer('pedido_id');
             $table->integer('cantidad');
+            $table->string('sabores');
+            $table->string('adicionales');
+            $table->float('precio');
             $table->timestamps();
         });
     }
