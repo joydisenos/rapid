@@ -11,6 +11,34 @@
                 <span class="sr-only">(current)</span>
               </a>
             </li>
+            @guest
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/login')}}">
+                Iniciar Sesión
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/register')}}">
+                Registro
+              </a>
+            </li>
+            @else
+            <li class="nav-item">
+              <a class="nav-link" href="{{url('/panel')}}">
+                Panel
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                Cerrar Sesión
+              </a>
+            </li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+            @endguest
             
           </ul>
         </div>

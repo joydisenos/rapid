@@ -1,13 +1,16 @@
 @extends('layouts.rapid')
 @section('content')
+
+@if(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count() > 0)
 <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-bottom d-block d-sm-none">
       <div class="container">
-		<small><font color="white">Este navbar mostrar cuando agreguen algo al carrito sino, no mostrarlo</font></small>
-		<button class="btn btn-warning" style="width:100%;" data-toggle="modal" data-target="#carrito"><font color="white"><i class="fas fa-concierge-bell"></i> Ver pedido ()</font></button>
+		
+		<button class="btn btn-warning" style="width:100%;" data-toggle="modal" data-target="#carrito"><font color="white"><i class="fas fa-concierge-bell"></i> Ver pedido ({{Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count()}})</font></button>
 
 	  </div>
     </nav>
+    @endif
     
 
     <!-- Page Content -->
@@ -70,6 +73,8 @@
 	{{ csrf_field() }}
 	<input type="hidden" value="{{$producto->id}}" name="producto_id">
 	<input type="hidden" value="{{$restaurant->id}}" name="restaurant_id">
+	<input type="hidden" value="{{$producto->precio}}" name="precio" id="precio{{$producto->id}}">
+
 <div class="modal fade" id="producto{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -129,8 +134,8 @@
 		
 		
 		<div class="custom-control custom-checkbox">
-			<input type="checkbox" class="custom-control-input" id="customCheck6" name="adicionales[]" value="{{$adicional->presentacion}}">
-				<label class="custom-control-label" for="customCheck6">{{title_case($adicional->presentacion)}}+ ${{$adicional->precio}}</label>
+			<input type="checkbox" class="custom-control-input adicionales{{$producto->id}} dinamico{{$producto->id}}" id="adicional{{$adicional->id}}" name="adicionales[]" value="{{$adicional->presentacion}}" data-precio="{{$adicional->precio}}">
+				<label class="custom-control-label" for="adicional{{$adicional->id}}">{{title_case($adicional->presentacion)}}+ ${{$adicional->precio}}</label>
 		</div>
 		
 
@@ -141,7 +146,7 @@
 		
 	<small>Seleccione la cantidad</small>
 	
-	<select class="custom-select" name="cantidad">
+	<select class="custom-select dinamico{{$producto->id}}" name="cantidad" id="cantidades{{$producto->id}}">
 		<option selected value="">Seleccionar cantidad</option>
 		<option value="1">1</option>
 		<option value="2">2</option>
@@ -163,14 +168,14 @@
 
 	 </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-warning" disabled>Agregar ${{$producto->precio}}</button>
+        <button type="submit" class="btn btn-warning" disabled>Agregar $<span id="btnprecio{{$producto->id}}">{{$producto->precio}}</span></button>
       </div>
 
 
 	 @else
     </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-warning">Agregar ${{$producto->precio}}</button>
+        <button type="submit" class="btn btn-warning">Agregar $<span id="btnprecio{{$producto->id}}">{{$producto->precio}}</span></button>
       </div>
       @endguest
 	
@@ -179,6 +184,41 @@
   </div>
 </div>
 </form>
+
+<script>
+	$(document).ready(function() {
+
+
+	$('.dinamico{{$producto->id}}').change(function(){	
+
+			var precio = parseFloat( $('#precio{{$producto->id}}').val() );
+			var total = precio;
+			var adicionales = 0;
+
+		$('.adicionales{{$producto->id}}:checked').each(function(){
+
+			
+			
+			var adicional = parseFloat( $(this).attr('data-precio') );
+			
+			adicionales += adicional;
+			
+
+			
+
+			
+			
+		});
+
+			var cantidad = $("#cantidades{{$producto->id}} option:selected").val();
+			
+			var total = precio + adicionales * cantidad;
+
+			$('#btnprecio{{$producto->id}}').text(total);
+	});
+
+	});
+</script>
 
 @endforeach
 
@@ -207,7 +247,9 @@
 		 <div class="col-md-4 d-none d-sm-block">
 			@include('includes.mipedido')
 			
+			@if(count(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)))
 			<a class="btn btn-warning" style="width:100%;" href="{{url('checkout').'/'.$restaurant->slug}}" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
+			@endif
 			
 		<hr> 
 		 </div>
@@ -232,17 +274,17 @@
       </div>
       
 	 <div class="modal-body">
-			<center><h4>Su pedido vacio <br>¿Con hambre?</h4>
-			<p class="lead">Agregá lo que quieras pedir. [Mostrar asi en version movil].</p>
+			
+			@include('includes.mipedido')
 			</center>
 	</div>
     
 	<div class="modal-footer">
         <a class="btn btn-default" style="width:100%;" data-dismiss="modal" role="button">Volver al menu</a>
-		<a class="btn btn-warning" style="width:100%;" href="/checkout.html" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
+		<a class="btn btn-warning" style="width:100%;" href="{{url('checkout').'/'.$restaurant->slug}}" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
 		
       </div>
-<center><small>Si no hay nada en el carrito colocar el boton continuar como "disabled"</small>	  </center>
+<center>	  </center>
     
 	
 </div>

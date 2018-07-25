@@ -49,6 +49,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'tipo' => 'required',
+            'localidad' => 'required',
             'apellido' => 'required|string|min:3|max:255',
             'telefono' => 'required|numeric',
             'ciudad' => 'required',
@@ -72,6 +73,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'apellido' => $data['apellido'],
             'telefono' => $data['telefono'],
+            'localidad' => $data['localidad'],
             'nombre_del_restaurante' => '',
             'descripcion' => '',
             'logo' => '',

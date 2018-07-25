@@ -10,4 +10,14 @@ class Pedido extends Model
     {
         return $this->hasMany(Compra::class);
     }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(User::class,'restaurant_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

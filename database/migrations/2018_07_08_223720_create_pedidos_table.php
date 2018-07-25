@@ -20,6 +20,7 @@ class CreatePedidosTable extends Migration
             $table->float('envio');
             $table->integer('delivery');
             $table->string('adicional');
+            $table->integer('estatus')->default(1);
             $table->float('total');
             $table->timestamps();
         });

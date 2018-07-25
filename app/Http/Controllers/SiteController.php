@@ -22,6 +22,11 @@ class SiteController extends Controller
     	return view('welcome',compact('ciudades'));
     }
 
+    public function alta()
+    {
+        return view('alta');
+    }
+
     public function rest($slug)
     {
     	$restaurant = User::where('slug','=',$slug)->first();

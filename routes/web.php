@@ -12,6 +12,7 @@
 */
 
 Route::get('/','SiteController@index');
+Route::get('/alta','SiteController@alta');
 Route::post('/restaurantes','SiteController@ciudad');
 
 
@@ -31,6 +32,7 @@ Route::group(['middleware'=> 'auth'],function(){
 	Route::get('/panel', 'UserController@index');
 	Route::get('/perfil', 'UserController@perfil');
 	Route::get('/compras', 'UserController@compras');
+	Route::get('/compra/eliminar/{id}', 'UserController@eliminarcompra');
 	Route::get('/favoritos', 'UserController@favoritos');
 	Route::post('/direccion/nueva', 'UserController@storedireccion');
 	Route::post('/actualizar/usuario', 'UserController@actualizar');

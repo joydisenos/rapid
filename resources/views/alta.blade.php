@@ -1,15 +1,12 @@
-		<!-- Modal -->
-<div class="modal fade" id="agregarrestaurant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Sumar Restaurante</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+@extends('layouts.rapid')
+@section('content')
+<div class="container">
+	<div class="row">
+		<div class="col">
+
+			<h4 class="mt-4">Suma tu restaurant</h4>
+			<hr>
+<form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
                         <input type="hidden" name="tipo" value="2">
@@ -116,8 +113,7 @@
                             </div>
                         </div>
                     </form>
-      </div>
-      
-    </div>
-  </div>
-</div>
+                    </div>
+                    </div>
+                    </div>
+@endsection

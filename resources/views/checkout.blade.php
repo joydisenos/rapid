@@ -21,13 +21,20 @@
 			
 			<b>Seleccioná tu direccion de entrega</b>
 				<hr>
+
+				@if(Auth::user()->direcciones->count() == 0)
+				<h6>No tienes direcciones registradas!</h6>
+				<button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#direccion">
+				Registrar direccion
+				</button>
+				@endif
 				
 				@foreach(Auth::user()->direcciones as $direccion)
 				<div class="custom-control custom-radio">
 					<input type="radio" id="direccion{{$direccion->id}}" name="direccion" class="custom-control-input" value="{{$direccion->id}}">
 					<label class="custom-control-label" for="direccion{{$direccion->id}}"><b>Casa</b> {{$direccion->direccion}} <a href="#">Editar</a></label>
 				<hr>
-				<!--<a href="#">Agregar otra direccion</a>-->
+				
 				</div>
 				@endforeach
 				<hr>
@@ -163,4 +170,65 @@
 
     </div>
     <!-- /.container -->
+
+    <!-- Modal -->
+<div class="modal fade" id="direccion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Dirección</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="{{url('direccion/nueva')}}" method="post" class="form-horizontal form-material">
+
+            {{ csrf_field() }}
+                                    <div class="form-group">
+                                        <label class="col-md-12">Dirección</label>
+                                        <div class="col-md-12">
+                                            <textarea rows="5" name="direccion" class="form-control form-control-line" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Ciudad</label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="ciudad" placeholder="ciudad" class="form-control form-control-line" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-12">Barrio (opcional)</label>
+                                        <div class="col-md-12">
+                                            <input type="text" name="barrio" placeholder="barrio" class="form-control form-control-line">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="container">
+                                        
+                                                                                  
+
+                                        <div class="row">
+
+                                            <div class="col">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                        </div>  
+                                            
+                                            <div class="col">
+                                            <button class="btn btn-primary">Registrar</button>
+                                        </div>
+                                        
+
+
+                                        </div>
+                                    </div>
+                                </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
 @endsection

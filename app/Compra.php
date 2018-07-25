@@ -15,4 +15,9 @@ class Compra extends Model
     {
         return $this->belongsTo(Pedido::class);
     }
+
+    public function restaurant()
+    {
+        return $this->belongsTo(User::class,'restaurant_id');
+    }
 }

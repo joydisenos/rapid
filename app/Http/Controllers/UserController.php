@@ -110,6 +110,14 @@ class UserController extends Controller
     {
     	return view('panel.compras');
     }
+    public function eliminarcompra($id)
+    {
+
+        $compra = Compra::findOrFail($id);
+        $compra->delete();
+
+        return redirect()->back()->with('status','Compra eliminada');
+    }
 
     public function compra(Request $request)
     {
@@ -147,7 +155,7 @@ class UserController extends Controller
         $compra->user_id = Auth::user()->id;
         $compra->restaurant_id = $request->restaurant_id;
         $compra->pedido_id = 0;
-        $compra->precio = 0;
+        $compra->precio = $request->precio;
         $compra->cantidad = $request->cantidad;
         $compra->save();
 

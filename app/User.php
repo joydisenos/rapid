@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'tipo','name', 'apellido', 'telefono', 'nombre_del_restaurante', 'descripcion', 'logo', 'slug', 'categorias', 'direccion', 'ciudad', 'email', 'password',
+        'tipo','name', 'apellido', 'localidad' , 'telefono', 'nombre_del_restaurante', 'descripcion', 'logo', 'slug', 'categorias', 'direccion', 'ciudad', 'email', 'password',
     ];
 
     /**
@@ -51,5 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Pedido::class);
     }
+
+    public function ventas()
+    {
+        return $this->hasMany(Pedido::class,'restaurant_id');
+    }    
 
 }

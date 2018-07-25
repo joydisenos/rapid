@@ -23,9 +23,32 @@
                 </div>
               </div>
             </div>
+
+
           </div>
 
         </header>
+
+        <div class="header-style-2">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="hero-content-v2">
+                <h3>Tienes un local? <strong>Aumenta tus ventas</strong></h3>
+                
+                <a href="{{url('/alta')}}" class="page-scroll btn btn-lg btn-default-filled">Sumar mi Local!</a>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <figure>
+                <img src="img/bg/hero-1.png" alt="">
+              </figure>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
 
       
 
