@@ -10,4 +10,9 @@ class Ciudad extends Model
     {
         return $this->hasMany(User::class,'ciudad');
     }
+
+    public function direcciones()
+    {
+        return $this->hasMany(Direccion::class,'ciudad');
+    }
 }

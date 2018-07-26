@@ -1,5 +1,18 @@
 @extends('layouts.rapid')
 @section('content')
+
+@if(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count() > 0)
+<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-bottom d-block d-sm-none">
+      <div class="container">
+		
+		<button class="btn btn-warning" style="width:100%;" data-toggle="modal" data-target="#carrito"><font color="white"><i class="fas fa-concierge-bell"></i> Ver pedido ({{Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count()}})</font></button>
+
+	  </div>
+    </nav>
+    @endif
+
+
 <!-- Page Content -->
     <div class="container">
 
@@ -15,7 +28,7 @@
 		<form action="{{url('checkout')}}" method="post">
 			{{csrf_field()}}
 			<input type="hidden" name="restaurant_id" value="{{$restaurant->id}}">
-			<input type="hidden" name="envio" value="0">
+			<input type="hidden" name="envio" id="envio" value="{{$restaurant->configuracion->envio}}">
 
 		<br> 
 			
@@ -24,33 +37,57 @@
 
 				@if(Auth::user()->direcciones->count() == 0)
 				<h6>No tienes direcciones registradas!</h6>
-				<button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#direccion">
+				<button type="button" class="btn btn-outline-warning mt-4" data-toggle="modal" data-target="#direccion">
 				Registrar direccion
 				</button>
-				@endif
+				@else
 				
 				@foreach(Auth::user()->direcciones as $direccion)
 				<div class="custom-control custom-radio">
 					<input type="radio" id="direccion{{$direccion->id}}" name="direccion" class="custom-control-input" value="{{$direccion->id}}">
-					<label class="custom-control-label" for="direccion{{$direccion->id}}"><b>Casa</b> {{$direccion->direccion}} <a href="#">Editar</a></label>
-				<hr>
+					<label class="custom-control-label" for="direccion{{$direccion->id}}"><b>{{$direccion->alias}}</b> {{$direccion->direccion}}</label>
+				
 				
 				</div>
 				@endforeach
+				<button type="button" class="btn btn-outline-warning mt-4" data-toggle="modal" data-target="#direccion">
+				Registrar direccion
+				</button>
+				@endif
 				<hr>
 				
 			<b>Seleccioná un medio de pago</b>
 				<hr>
-				
+			
+			@if($restaurant->configuracion->local == 1)
 			<div class="custom-control custom-radio">
-					<input type="radio" id="efectivo" name="delivery" value="1" class="custom-control-input">
+					<input type="radio" id="local" name="delivery" value="1" class="envios custom-control-input">
+					<label class="custom-control-label" for="local"><b>Retiro en el local</b></label>
+			</div>
+
+			@endif
+
+			@if($restaurant->configuracion->domicilio == 1)
+
+			@if($restaurant->configuracion->efectivodelivery == 1)
+			<div class="custom-control custom-radio">
+					<input type="radio" id="efectivo" name="delivery" value="2" class="envios custom-control-input">
 					<label class="custom-control-label" for="efectivo"><b>Efectivo al Delivery o en el Local</b></label>
 			</div>
+			@else
+			@endif
 			
+
+			@if($restaurant->configuracion->tarjetadelivery == 1)
 			<div class="custom-control custom-radio">
-					<input type="radio" id="tarjeta" name="delivery" value="2" class="custom-control-input">
+					<input type="radio" id="tarjeta" name="delivery" value="3" class="envios custom-control-input">
 					<label class="custom-control-label" for="tarjeta"><b>Tarjeta al Delivery o en el Local</b></label>
 			</div>
+			@else
+			@endif
+			
+			@else
+			@endif
 			
 			<hr>
 			
@@ -185,6 +222,13 @@
         <form action="{{url('direccion/nueva')}}" method="post" class="form-horizontal form-material">
 
             {{ csrf_field() }}
+
+            <div class="form-group">
+                <label class="col-md-12">Alias</label>
+                <div class="col-md-12">
+                    <input type="text" rows="5" name="alias" class="form-control form-control-line" placeholder="Ejemplo: casa, oficina..." required>
+                </div>
+            </div>
                                     <div class="form-group">
                                         <label class="col-md-12">Dirección</label>
                                         <div class="col-md-12">
@@ -195,7 +239,12 @@
                                     <div class="form-group">
                                         <label class="col-md-12">Ciudad</label>
                                         <div class="col-md-12">
-                                            <input type="text" name="ciudad" placeholder="ciudad" class="form-control form-control-line" required>
+                                            <select name="ciudad"  class="form-control form-control-line" required>
+                                                <option value="">Seleccione su ciudad</option>
+                                                @foreach($ciudades as $ciudad)
+                                                <option value="{{$ciudad->id}}">{{$ciudad->nombre}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
@@ -231,4 +280,50 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal fade" id="carrito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+			<p><b>Mi pedido</b></p> 
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+      </div>
+      
+	 <div class="modal-body">
+			
+			@include('includes.mipedido')
+			
+	</div>
+    
+	<div class="modal-footer">
+        <a class="btn btn-default" style="width:100%;" data-dismiss="modal" role="button">Volver</a>
+		
+      </div>
+
+    
+	
+</div>
+	
+  </div>
+</div>
+@endsection
+@section('scripts')
+<script>
+	$(document).ready(function(){
+
+		$('.envios').change(function(){
+			var valor = $(this).val();
+			if(valor == 1){
+				var envio = 0;
+			}else{
+				var envio = {{$restaurant->configuracion->envio}};
+			}
+		$('#envio').val(envio);
+		});
+
+	});
+</script>
 @endsection

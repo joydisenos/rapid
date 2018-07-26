@@ -16,7 +16,7 @@
 					    <tr>
 					    	<td>{{$compra->producto->nombre}}</td>
 					    	<td>{{$compra->adicionales}} , {{$compra->sabores}}</td>
-					    	<td>$precio</td>
+					    	<td>{{$compra->precio}}</td>
 					    	<td> <a href="{{url('compra/eliminar'.'/'.$compra->id)}}"> <i class="fas fa-minus"></i> </a> </td>
 					    </tr>
 					    @endforeach

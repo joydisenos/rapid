@@ -16,8 +16,16 @@ class AdminController extends Controller
 
    public function usuarios()
    {
-      $usuarios = User::all();
-   	return view('admin.usuarios',compact('usuarios'));
+      $usuarios = User::where('tipo','=',1)->get();
+      $ciudades = Ciudad::where('estatus','=',1)->get();
+   	return view('admin.usuarios',compact('usuarios','ciudades'));
+   }
+
+   public function restaurantes()
+   {
+      $usuarios = User::where('tipo','=',2)->get();
+      $ciudades = Ciudad::where('estatus','=',1)->get();
+      return view('admin.restaurantes',compact('usuarios','ciudades'));
    }
 
    public function categorias()
@@ -44,7 +52,7 @@ class AdminController extends Controller
 
 
       $categoria = new Categoria();
-      $categoria->nombre = $request->categoria;
+      $categoria->nombre = $request->nombre;
       $categoria->slug = str_slug($request->nombre,'-');
       $categoria->save();
 
@@ -57,6 +65,16 @@ class AdminController extends Controller
       $ciudades = Ciudad::where('estatus','=',1)->get();
 
    	return view('admin.ciudades' , compact('ciudades'));
+   }
+
+   public function asignarciudad(Request $request)
+   {
+      $user = User::findOrFail($request->user_id);
+      $user->ciudad = $request->ciudad;
+      $user->save();
+      
+
+      return redirect()->back()->with('status','usuario '. $user->name .' asignado correctamente');
    }
 
    public function borrarciudad($id)

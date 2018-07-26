@@ -15,7 +15,7 @@
 <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <small class="mt-4">{{$ciudad->users->count()}} Restaurantes en {{title_case($ciudad->nombre)}}</small>
+          <small class="mt-4">{{$ciudad->users->where('tipo','=',2)->count()}} Restaurantes en {{title_case($ciudad->nombre)}}</small>
           <hr>
 		
 		  
@@ -43,7 +43,7 @@
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
 			@endif
 				<div class="media-body">
-					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} <span class="badge badge-success">Abierto</span></h5>
+					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}}</h5>
 					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - <i class="fas fa-utensils"></i> {{$restaurant->categorias}}</small><br>
 					<small><b>Tipo de envio:</b> (Delivery) - (TakeAway) - (Delivery + TakeAway)</small>
 				</div>

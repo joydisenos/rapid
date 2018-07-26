@@ -37,9 +37,9 @@ class User extends Authenticatable
         return $this->hasMany(Direccion::class);
     }
 
-    public function ciudad()
+    public function ciudads()
     {
-        return $this->belongsTo(Direccion::class);
+        return $this->belongsTo(Ciudad::class,'ciudad');
     }
 
     public function compras()
@@ -55,6 +55,11 @@ class User extends Authenticatable
     public function ventas()
     {
         return $this->hasMany(Pedido::class,'restaurant_id');
+    }
+
+    public function configuracion()
+    {
+        return $this->hasOne(Config::class);
     }    
 
 }

@@ -20,4 +20,9 @@ class Pedido extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function direccion()
+    {
+        return $this->belongsTo(Direccion::class);
+    }
 }

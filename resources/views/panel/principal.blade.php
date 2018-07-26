@@ -115,9 +115,12 @@
                         <li>
                             <a href="{{url('compras')}}" class="waves-effect"><i class="fa fa-table m-r-10" aria-hidden="true"></i>Mis Compras</a>
                         </li>
+                        
+                        <!-- Agregar Módulo de Favoritos
                         <li>
                             <a href="{{url('favoritos')}}" class="waves-effect"><i class="fa fa-star m-r-10" aria-hidden="true"></i>Favoritos</a>
                         </li>
+                    -->
                         @endif
 
                         @if(Auth::user()->tipo == 2)

@@ -34,7 +34,7 @@ Ventas
     <td>{{$venta->total}}</td>
     <td>
         @if($venta->estatus == 1)
-        <a href="#" class="btn btn-outline-danger">Entregar</a>
+        <a href="{{url('venta').'/'.$venta->id.'/2'}}" class="btn btn-outline-danger">Entregar</a>
         @elseif($venta->estatus == 2)
         <span style="color: green;">Entregado</span>
         @endif
@@ -60,6 +60,23 @@ Ventas
         </button>
       </div>
       <div class="modal-body">
+        
+        @if($venta->delivery == 1)
+        <p>Retiro en Local</p>
+        @elseif($venta->delivery == 2)
+        <p>Pago con efectivo al Delivery</p>
+        @elseif($venta->delivery == 3)
+        <p>Pago con tarjeta al Delivery</p>
+        @endif
+
+        @if($venta->delivery == 1)
+        @else
+        <p><strong>Dirección a entregar: </strong> {{$venta->direccion->direccion}}, {{$venta->direccion->ciudads->nombre}}, {{$venta->direccion->barrio}}</p>
+        @endif
+
+        <p>{{$venta->adicional}}</p>
+
+        
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -78,6 +95,20 @@ Ventas
                         <td>{{$compra->precio}}</td>
                     </tr>
                     @endforeach
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Envío</strong></td>
+                        <td>{{$venta->envio}}</td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td>{{$venta->total}}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -93,6 +124,6 @@ Ventas
 @endforeach
 
 @else
-<h4 class="card-title">Aún no tienes compras, puedes buscar restaurantes en tu localidad y ordenar tu comida favorita por <a href="{{url('/')}}">rapidelly.com</a></h4>
+<h4 class="card-title">Aún no tienes ventas registradas, comparte tu restaurante con clientes y comienza a multiplicar tus pedidos hoy mismo! </h4>
 @endif
 @endsection

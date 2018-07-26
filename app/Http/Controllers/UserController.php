@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Redirect;
 use App\Direccion;
 use App\Compra;
 use App\Pedido;
+use App\Ciudad;
 use App\Categoria;
 use App\User;
+use App\Config;
 
 
 class UserController extends Controller
@@ -22,15 +24,66 @@ class UserController extends Controller
     {
 
         $categorias = Categoria::where('estatus','=',1)->get();
-        
+        $ciudades = Ciudad::where('estatus','=',1)->get();
+        if(Auth::user()->tipo == 2)
+        {
+            $config = Config::where('user_id','=',Auth::user()->id)->first();
 
-    	return view('panel.perfil',compact('categorias'));
+            if(is_null($config))
+            {
+                $config = new Config();
+                $config->user_id = Auth::user()->id;
+                $config->lunes = '00:00,00:00';
+                $config->martes = '00:00,00:00';
+                $config->miercoles = '00:00,00:00';
+                $config->jueves = '00:00,00:00';
+                $config->viernes = '00:00,00:00';
+                $config->sabado = '00:00,00:00';
+                $config->domingo = '00:00,00:00';
+                $config->envio = 0;
+                $config->save();
+
+                $lunes = explode(',', $config->lunes);
+                $martes = explode(',', $config->martes);
+                $miercoles = explode(',', $config->miercoles);
+                $jueves = explode(',', $config->jueves);
+                $viernes = explode(',', $config->viernes);
+                $sabado = explode(',', $config->sabado);
+                $domingo = explode(',', $config->domingo);
+
+                return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
+            }else{
+                
+                $lunes = explode(',', $config->lunes);
+                $martes = explode(',', $config->martes);
+                $miercoles = explode(',', $config->miercoles);
+                $jueves = explode(',', $config->jueves);
+                $viernes = explode(',', $config->viernes);
+                $sabado = explode(',', $config->sabado);
+                $domingo = explode(',', $config->domingo);
+
+                return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
+            }
+
+        }else{
+        
+                return view('panel.perfil',compact('categorias','ciudades'));
+            }
     }
     public function storedireccion(Request $request)
     {
+
+        $validatedData = $request->validate([
+                'alias' => 'required',
+                'direccion' => 'required',
+                'ciudad' => 'required',
+                ]);
+
+
         $direccion = new Direccion();
 
         $direccion->user_id = Auth::user()->id;
+        $direccion->alias = $request->alias;
         $direccion->direccion = $request->direccion;
         $direccion->ciudad = $request->ciudad;
         if($request->barrio == '')
@@ -167,9 +220,10 @@ class UserController extends Controller
     public function checkout($slug)
     {
 
-        $restaurant = User::where('slug','=', $slug)->first();       
+        $restaurant = User::where('slug','=', $slug)->first();
+        $ciudades = Ciudad::where('estatus','=',1)->get();       
 
-        return view('checkout',compact('restaurant'));
+        return view('checkout',compact('restaurant','ciudades'));
     }
 
     public function pedido(Request $request)
@@ -198,6 +252,7 @@ class UserController extends Controller
         $pedido = new Pedido();
         $pedido->user_id = Auth::user()->id;
         $pedido->restaurant_id = $request->restaurant_id;
+        $pedido->direccion_id = $request->direccion;
         $pedido->envio = $request->envio;
         $pedido->delivery = $request->delivery;
         if($request->adicional == ''){
@@ -205,7 +260,7 @@ class UserController extends Controller
             }else{
                 $pedido->adicional = $request->adicional;
             }
-        $pedido->total = $total;
+        $pedido->total = $total + $request->envio;
         $pedido->save();
 
         foreach ($compras as $key => $compra) {

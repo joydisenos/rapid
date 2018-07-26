@@ -10,4 +10,9 @@ class Direccion extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function ciudads()
+    {
+        return $this->belongsTo(Ciudad::class,'ciudad');
+    }
 }

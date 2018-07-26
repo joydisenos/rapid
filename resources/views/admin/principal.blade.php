@@ -112,6 +112,10 @@
                         </li>
 
                         <li>
+                            <a href="{{url('admin/restaurantes')}}" class="waves-effect"><i class="fa fa-shopping-cart m-r-10" aria-hidden="true"></i>Restaurantes</a>
+                        </li>
+
+                        <li>
                             <a href="{{url('admin/categorias')}}" class="waves-effect"><i class="fa fa-sort-amount-asc m-r-10" aria-hidden="true"></i>Categorias</a>
                         </li>
 

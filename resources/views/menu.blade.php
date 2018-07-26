@@ -1,6 +1,9 @@
 @extends('layouts.rapid')
 @section('content')
 
+
+@guest
+@else
 @if(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count() > 0)
 <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-bottom d-block d-sm-none">
@@ -11,7 +14,7 @@
 	  </div>
     </nav>
     @endif
-    
+    @endguest
 
     <!-- Page Content -->
     <div class="container">
@@ -27,10 +30,27 @@
 			@endif
 
 				<div class="media-body">
-					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} <span class="badge badge-success">Abierto</span> o <span class="badge badge-danger">Cerrado</span></h5>
+					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} 
+
+						
+						@if($abierto == 1)
+						<span class="badge badge-success">Abierto</span>
+						@else
+						<span class="badge badge-danger">Cerrado</span>
+						@endif
+					</h5>
 					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - {{$restaurant->categorias}}</small><br>
-					<small><b>Tipo de envio:</b> (Delivery) - (TakeAway) - (Delivery + TakeAway)</small><br>
-					<small><b>Costo de envio:</b> Si realiza envios colocar aqui el costo envio (Si el costo es fijo mostrar el precio sino colocar "costo según zona"</small>
+					<small><b>Tipo de envio:</b>
+						@if($restaurant->configuracion->domicilio)
+						- Delivery 
+						@endif
+
+						@if($restaurant->configuracion->local)
+						- Retiro en local 	 
+						@endif
+							
+					 (Delivery) - (TakeAway) - (Delivery + TakeAway)</small><br>
+					<small><b>Costo de envio:</b> ${{$restaurant->configuracion->envio}}</small>
 				</div>
 		</div>
 		<hr>
@@ -57,7 +77,18 @@
 	
 @foreach($restaurant->productos as $producto)
 	<div class="media">
+			@if($producto->foto == '')
+			
+			@if($restaurant->logo == '')
+			<!-- Logo Por Defecto -->
 			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			@else
+			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
+			@endif
+
+			@else
+			<img class="mr-3" src="{{asset('storage').'/'.$producto->foto}}" width="64px" height="64px" alt="Generic placeholder image">
+			@endif
 				<div class="media-body">
 					<h5 class="mt-0">{{title_case($producto->nombre)}}</h5>
 					<small>{{$producto->descripcion}}</small><br>
@@ -81,7 +112,20 @@
       <div class="modal-header">
 	  
         <div class="media">
+			
+        	@if($producto->foto == '')
+			
+			@if($restaurant->logo == '')
+			<!-- Logo Por Defecto -->
 			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			@else
+			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
+			@endif
+
+			@else
+			<img class="mr-3" src="{{asset('storage').'/'.$producto->foto}}" width="64px" height="64px" alt="Generic placeholder image">
+			@endif
+
 				<div class="media-body">
 				<h5 class="mt-0">{{title_case($producto->nombre)}}</h5>
 				<small>{{$producto->descripcion}}</small><br>
@@ -118,13 +162,15 @@
 	<?php $sabores = explode(',',$producto->sabores); ?>  
 	@foreach($sabores as $key=>$sabor)
 	<div class="custom-control custom-checkbox">
-			<input type="checkbox" class="custom-control-input" value="{{$sabor}}" name="sabores[]" id="sabor{{$key}}">
-				<label class="custom-control-label" for="sabor{{$key}}">{{title_case($sabor)}}</label>
+			<input type="checkbox" class="custom-control-input" value="{{$sabor}}" name="sabores[]" id="sabor{{$key}}{{$producto->id}}">
+				<label class="custom-control-label" for="sabor{{$key}}{{$producto->id}}">{{title_case($sabor)}}</label>
 	</div>
+	
 	@endforeach
+	<hr>
 	@endif
 		
-<hr>
+
 	
 	@if(count($producto->presentaciones))
 		<small>Puede Agregar adicionales a su pedido</small>
@@ -142,6 +188,7 @@
 		
 
 		@endforeach
+		<hr>
 		@endif
 		
 	<small>Seleccione la cantidad</small>
@@ -155,7 +202,7 @@
 		<option value="5">5</option>
 		<option value="6">6</option>
 	</select>
-	<hr>
+	
 	
 		
 		
@@ -163,19 +210,27 @@
 	 @endguest 
 
 
-
+	 	</div>
 	 @guest
 
-	 </div>
+	 
       <div class="modal-footer">
         <button type="submit" class="btn btn-warning" disabled>Agregar $<span id="btnprecio{{$producto->id}}">{{$producto->precio}}</span></button>
       </div>
 
 
 	 @else
-    </div>
+	 
+
+   
       <div class="modal-footer">
+        @if(Auth::user()->tipo == 2)
+        <div class="text-center bg-warning">
+        	<p>Estás logeado como restaurante, para realizar compras debes entrar con una cuenta de cliente</p>
+        </div>
+        @else
         <button type="submit" class="btn btn-warning">Agregar $<span id="btnprecio{{$producto->id}}">{{$producto->precio}}</span></button>
+        @endif
       </div>
       @endguest
 	
@@ -191,7 +246,7 @@
 
 	$('.dinamico{{$producto->id}}').change(function(){	
 
-			var precio = parseFloat( $('#precio{{$producto->id}}').val() );
+			var precio = parseFloat( {{$producto->precio}} );
 			var total = precio;
 			var adicionales = 0;
 
@@ -212,9 +267,11 @@
 
 			var cantidad = $("#cantidades{{$producto->id}} option:selected").val();
 			
-			var total = precio + adicionales * cantidad;
+			var total = (precio + adicionales) * cantidad;
 
 			$('#btnprecio{{$producto->id}}').text(total);
+			$('#precio{{$producto->id}}').val(total);
+
 	});
 
 	});
@@ -247,9 +304,12 @@
 		 <div class="col-md-4 d-none d-sm-block">
 			@include('includes.mipedido')
 			
+			@guest
+			@else
 			@if(count(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)))
 			<a class="btn btn-warning" style="width:100%;" href="{{url('checkout').'/'.$restaurant->slug}}" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
 			@endif
+			@endguest
 			
 		<hr> 
 		 </div>
@@ -276,7 +336,7 @@
 	 <div class="modal-body">
 			
 			@include('includes.mipedido')
-			</center>
+			
 	</div>
     
 	<div class="modal-footer">
@@ -284,7 +344,7 @@
 		<a class="btn btn-warning" style="width:100%;" href="{{url('checkout').'/'.$restaurant->slug}}" role="button"><i class="fas fa-concierge-bell"></i> Continuar</a>
 		
       </div>
-<center>	  </center>
+
     
 	
 </div>

@@ -57,6 +57,8 @@ Route::group(['middleware'=> 'auth'],function(){
 	Route::post('/producto/edit/{id}', 'RestaurantController@actualizarproducto');
 
 	Route::get('/ventas', 'RestaurantController@ventas');
+	Route::get('/venta/{id}/{estatus}', 'RestaurantController@actualizarventa');
+	Route::post('/actualizar/horario', 'RestaurantController@actualizarhorario');
   	
 });
 
@@ -67,12 +69,14 @@ Route::group(['middleware'=> 'auth'],function(){
 
     Route::get('/', 'AdminController@index');
     Route::get('/usuarios', 'AdminController@usuarios');
+    Route::get('/restaurantes', 'AdminController@restaurantes');
     Route::get('/categorias', 'AdminController@categorias');
     Route::get('borrar/categoria/{id}', 'AdminController@borrarcategoria');
     Route::get('borrar/ciudad/{id}', 'AdminController@borrarciudad');
     Route::get('/ciudades', 'AdminController@ciudades');
     Route::post('/categoria', 'AdminController@storecategoria');
     Route::post('/ciudad', 'AdminController@storeciudad');
+    Route::post('/asignar', 'AdminController@asignarciudad');
 
 });  	
 });

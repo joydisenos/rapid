@@ -14,7 +14,7 @@ Admin Categorías
 				<p>Categoria</p>
 			</div>
 			<div class="col-sm-8">
-				<input type="text" name="categoria" class="form-control" placeholder="Nombre de la categoría" required>
+				<input type="text" name="nombre" class="form-control" placeholder="Nombre de la categoría" required>
 			</div>
 		</div>
 

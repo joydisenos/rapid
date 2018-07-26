@@ -33,7 +33,21 @@ Compras
                                            	<td>{{$compra->precio}}</td>
                                            </tr>
 
-                                           @endforeach 
+                                           @endforeach
+
+                                           <tr>
+                                             <td></td>
+                                             <td></td>
+                                             <td>Envío</td>
+                                             <td>{{session('pedido')->envio}}</td>
+                                           </tr> 
+
+                                           <tr>
+                                             <td></td>
+                                             <td></td>
+                                             <td>Total</td>
+                                             <td>{{session('pedido')->total}}</td>
+                                           </tr> 
                                            
                                         </tbody>
                                     </table>
@@ -101,14 +115,27 @@ Compras
                     
                 </thead>
                 <tbody>
-                    @foreach($compra->compras as $compra)
+                    @foreach($compra->compras as $comprasing)
                     <tr>
-                        <td>{{$compra->producto->nombre}}</td>
-                        <td>{{$compra->sabores}} {{$compra->adicionales}}</td>
-                        <td>{{$compra->cantidad}}</td>
-                        <td>{{$compra->precio}}</td>
+                        <td>{{$comprasing->producto->nombre}}</td>
+                        <td>{{$comprasing->sabores}} {{$comprasing->adicionales}}</td>
+                        <td>{{$comprasing->cantidad}}</td>
+                        <td>{{$comprasing->precio}}</td>
                     </tr>
                     @endforeach
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Envío</strong></td>
+                        <td>{{$compra->envio}}</td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Total</strong></td>
+                        <td>{{$compra->total}}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
