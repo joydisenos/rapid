@@ -49,7 +49,7 @@
 						- Retiro en local 	 
 						@endif
 							
-					 (Delivery) - (TakeAway) - (Delivery + TakeAway)</small><br>
+					 </small><br>
 					<small><b>Costo de envio:</b> ${{$restaurant->configuracion->envio}}</small>
 				</div>
 		</div>

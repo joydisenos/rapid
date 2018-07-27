@@ -34,6 +34,13 @@
 		 <div class="col-sm-8">
           <small class="mt-4">Los mejores restaurantes de {{title_case($ciudad->nombre)}} están aca</small>
           <hr>
+
+		
+		@if($restaurantes->count() == 0)
+          <div class="media">
+          	<p>No tenemos restaurantes registrados en esta localidad, si tienes un restaurant registralo por {{url('alta')}} o deseas recomendar uno contáctanos!</p>
+          </div>
+        @endif
 			
 		@foreach($restaurantes as $restaurant)
 		<div class="media">
@@ -45,7 +52,16 @@
 				<div class="media-body">
 					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}}</h5>
 					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - <i class="fas fa-utensils"></i> {{$restaurant->categorias}}</small><br>
-					<small><b>Tipo de envio:</b> (Delivery) - (TakeAway) - (Delivery + TakeAway)</small>
+					<small><b>Tipo de envio:</b>
+
+					@if($restaurant->configuracion->domicilio)
+						- Delivery 
+						@endif
+
+						@if($restaurant->configuracion->local)
+						- Retiro en local 	 
+						@endif
+					</small>
 				</div>
 
 				<a class="btn btn-warning ml-3 d-none d-sm-block" href="{{url('restaurant').'/'.$restaurant->slug}}" role="button">Ver Menú</a>

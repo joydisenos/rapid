@@ -56,23 +56,28 @@
 				@endif
 				<hr>
 				
-			<b>Seleccioná un medio de pago</b>
+			<b>Seleccioná un modo de entrega</b>
 				<hr>
 			
 			@if($restaurant->configuracion->local == 1)
+
 			<div class="custom-control custom-radio">
 					<input type="radio" id="local" name="delivery" value="1" class="envios custom-control-input">
 					<label class="custom-control-label" for="local"><b>Retiro en el local</b></label>
 			</div>
+			<hr>
 
 			@endif
 
 			@if($restaurant->configuracion->domicilio == 1)
 
+			<b>Delivery</b>
+			<hr>
+
 			@if($restaurant->configuracion->efectivodelivery == 1)
 			<div class="custom-control custom-radio">
 					<input type="radio" id="efectivo" name="delivery" value="2" class="envios custom-control-input">
-					<label class="custom-control-label" for="efectivo"><b>Efectivo al Delivery o en el Local</b></label>
+					<label class="custom-control-label" for="efectivo"><b>Efectivo al Delivery</b></label>
 			</div>
 			@else
 			@endif
@@ -81,7 +86,7 @@
 			@if($restaurant->configuracion->tarjetadelivery == 1)
 			<div class="custom-control custom-radio">
 					<input type="radio" id="tarjeta" name="delivery" value="3" class="envios custom-control-input">
-					<label class="custom-control-label" for="tarjeta"><b>Tarjeta al Delivery o en el Local</b></label>
+					<label class="custom-control-label" for="tarjeta"><b>Tarjeta al Delivery</b></label>
 			</div>
 			@else
 			@endif

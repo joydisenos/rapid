@@ -1,7 +1,9 @@
 <p><b>Mi Pedido</b></p>
+			@if(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=', $restaurant->id)->count() == 0)
 			<center><h4>Su pedido vacio <br>¿Con hambre?</h4>
 			<p class="lead">Agregá lo que quieras pedir.</p>
 			</center>
+			@endif
 @guest
 @else
 			<div class="table-responsive">

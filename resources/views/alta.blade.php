@@ -3,6 +3,9 @@
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-6 mt-4 mb-4">
+            
+            @guest
+
 
 			<h4 class="">Suma tu restaurant</h4>
 			<hr>
@@ -113,6 +116,12 @@
                             </div>
                         </div>
                     </form>
+                    @else
+                    <h4 class="">Suma tu restaurant</h4>
+
+            <p>Para registrar un local debes cerrar la sesión que tienes activa!</p>
+            
+                    @endguest
                     </div>
                     </div>
                     </div>

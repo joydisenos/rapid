@@ -212,7 +212,7 @@ class UserController extends Controller
         $compra->cantidad = $request->cantidad;
         $compra->save();
 
-        return redirect()->back()->with('status', 'Compra registrada con éxito');
+        return redirect()->back()->with('status', 'Producto agregado a su pedido');
 
 
     }

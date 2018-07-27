@@ -46,11 +46,18 @@
 		<br>
 		<img src="http://www.rapidelly.com/logo.png" width="150px" height="auto"/>
         	</div>
-        	<div class="col">
-        		<span class="text-muted text-center">Sumar mi Restaurant</span>
-		<br>
-		<a class="btn btn-warning btn-lg" data-toggle="modal" data-target="#agregarrestaurant"><b><i class="fas fa-store-alt"></i> Quiero ¡Sumar mi local!</b></a>
-        	</div>
+        	@guest
+
+            <div class="col">
+                <span class="text-muted text-center">Sumar mi Restaurant</span>
+        <br>
+        <a class="btn btn-warning btn-lg" data-toggle="modal" data-target="#agregarrestaurant"><b><i class="fas fa-store-alt"></i> Quiero ¡Sumar mi local!</b></a>
+            </div>
+
+            
+            @else
+            
+            @endguest
 
         </div>
       </div>

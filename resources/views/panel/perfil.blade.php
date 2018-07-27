@@ -176,7 +176,7 @@ Perfil
                                   <div class="form-check">
                                     <label class="form-check-label">
                                       <input type="checkbox" name="tarjetadelivery" value="1" class="form-check-input"
-                                      @if ($config->tajetadelivery == 1)
+                                      @if ($config->tarjetadelivery == 1)
                                       checked
                                       @else
                                       @endif
