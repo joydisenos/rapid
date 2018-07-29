@@ -11,6 +11,7 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laraveles/spanish": "^1.0",
+        "mercadopago/sdk": "0.5.2",
         "nesbot/carbon": "^1.32",
         "spatie/laravel-permission": "^2.12"
     },

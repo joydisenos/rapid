@@ -17,6 +17,7 @@ Productos
     <th>Precio</th>
     <th>Adicionales</th>
     <th>Detalles</th>
+    <th>Activar/Ocultar</th>
     <th>Editar</th>
                                             </tr>
                                         </thead>
@@ -46,6 +47,13 @@ Productos
             @endif
         </td>
         <td>{{$producto->descripcion}}</td>
+        <td>
+            @if($producto->estatus == 1)
+            <a href="{{url('/activar').'/'.$producto->id.'/2'}}" class="btn btn-danger">Ocultar</a>
+            @elseif($producto->estatus == 2)
+            <a href="{{url('/activar').'/'.$producto->id.'/1'}}" class="btn btn-warning">Mostrar</a>
+            @endif
+        </td>
         <td><a href="{{url('producto/edit').'/'.$producto->id}}" class="btn btn-danger"><i class="fa fa-edit"></i> Editar</a></td>
     </tr>
     @endforeach

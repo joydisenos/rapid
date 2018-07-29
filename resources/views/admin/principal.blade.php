@@ -120,6 +120,10 @@
                         </li>
 
                         <li>
+                            <a href="{{url('admin/precios')}}" class="waves-effect"><i class="fa fa-money m-r-10" aria-hidden="true"></i>Precios</a>
+                        </li>
+
+                        <li>
                             <a href="{{url('admin/ciudades')}}" class="waves-effect"><i class="fa fa-map-marker m-r-10" aria-hidden="true"></i>Ciudades</a>
                         </li>
                         

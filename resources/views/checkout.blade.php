@@ -58,8 +58,17 @@
 				
 			<b>Seleccioná un modo de entrega</b>
 				<hr>
-			
+@if($restaurant->configuracion->domicilio == 1)
+
+<div class="custom-control custom-radio">
+					<input type="radio" id="entrega" name="delivery" value="0" class="envios custom-control-input">
+					<label class="custom-control-label" for="entrega"><b>Delivery</b></label>
+</div>			
+
+@endif
 			@if($restaurant->configuracion->local == 1)
+
+			
 
 			<div class="custom-control custom-radio">
 					<input type="radio" id="local" name="delivery" value="1" class="envios custom-control-input">
@@ -69,15 +78,15 @@
 
 			@endif
 
-			@if($restaurant->configuracion->domicilio == 1)
+			
 
-			<b>Delivery</b>
+			<b>Forma de pago</b>
 			<hr>
 
 			@if($restaurant->configuracion->efectivodelivery == 1)
 			<div class="custom-control custom-radio">
-					<input type="radio" id="efectivo" name="delivery" value="2" class="envios custom-control-input">
-					<label class="custom-control-label" for="efectivo"><b>Efectivo al Delivery</b></label>
+					<input type="radio" id="efectivo" name="pago" value="1" class="custom-control-input">
+					<label class="custom-control-label" for="efectivo"><b>Efectivo <span class="tipodeenvio"></span></b></label>
 			</div>
 			@else
 			@endif
@@ -85,14 +94,13 @@
 
 			@if($restaurant->configuracion->tarjetadelivery == 1)
 			<div class="custom-control custom-radio">
-					<input type="radio" id="tarjeta" name="delivery" value="3" class="envios custom-control-input">
-					<label class="custom-control-label" for="tarjeta"><b>Tarjeta al Delivery</b></label>
+					<input type="radio" id="tarjeta" name="pago" value="2" class="custom-control-input">
+					<label class="custom-control-label" for="tarjeta"><b>Tarjeta <span class="tipodeenvio"></span></b></label>
 			</div>
 			@else
 			@endif
 			
-			@else
-			@endif
+			
 			
 			<hr>
 			
@@ -323,8 +331,10 @@
 			var valor = $(this).val();
 			if(valor == 1){
 				var envio = 0;
+				$('.tipodeenvio').text('en el local');
 			}else{
 				var envio = {{$restaurant->configuracion->envio}};
+				$('.tipodeenvio').text('al delivery');
 			}
 		$('#envio').val(envio);
 		});

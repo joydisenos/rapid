@@ -30,6 +30,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('tipo')->default(0);
             $table->integer('estatus')->default(1);
+            $table->date('expira');
+            $table->date('destacado')->nullable();
+            $table->integer('prueba')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });

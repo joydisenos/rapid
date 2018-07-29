@@ -15,7 +15,7 @@
 <div class="container">
       <div class="row">
         <div class="col-sm-12">
-          <small class="mt-4">{{$ciudad->users->where('tipo','=',2)->count()}} Restaurantes en {{title_case($ciudad->nombre)}}</small>
+          <small class="mt-4">{{$restaurantes->count()}} Restaurantes en {{title_case($ciudad->nombre)}}</small>
           <hr>
 		
 		  
@@ -41,9 +41,37 @@
           	<p>No tenemos restaurantes registrados en esta localidad, si tienes un restaurant registralo por {{url('alta')}} o deseas recomendar uno contáctanos!</p>
           </div>
         @endif
+
+        @foreach($destacados as $restaurant)
+		<div class="media" style="box-shadow:0px 0px 10px yellow; padding:5px">
+			@if($restaurant->logo == '')
+			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			@else
+			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
+			@endif
+				<div class="media-body">
+					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} <span class="badge badge-warning">Destacado</span></h5>
+					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - <i class="fas fa-utensils"></i> {{$restaurant->categorias}}</small><br>
+					<small><b>Tipo de envio:</b>
+
+					@if($restaurant->configuracion->domicilio)
+						- Delivery 
+						@endif
+
+						@if($restaurant->configuracion->local)
+						- Retiro en local 	 
+						@endif
+					</small>
+				</div>
+
+				<a class="btn btn-warning ml-3 d-none d-sm-block" href="{{url('restaurant').'/'.$restaurant->slug}}" role="button">Ver Menú</a>
+				<a class="btn btn-warning ml-3 d-block d-sm-none" href="{{url('restaurant').'/'.$restaurant->slug}}" role="button">Ver</a>
+		</div>
+		<hr>
+		@endforeach
 			
 		@foreach($restaurantes as $restaurant)
-		<div class="media">
+		<div class="media" style="padding:5px">
 			@if($restaurant->logo == '')
 			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
 			@else

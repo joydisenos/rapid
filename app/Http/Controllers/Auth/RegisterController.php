@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -83,6 +84,7 @@ class RegisterController extends Controller
             'ciudad' => $data['ciudad'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'expira' => Carbon::now(-3)->addDays(16),
         ]);
     }
 }

@@ -50,7 +50,7 @@ class SiteController extends Controller
        
         switch ($dia) {
             case 'Monday':
-                if(Carbon::createFromFormat('H:i', $lunes[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $lunes[1])->format('H:i')){
+                if(Carbon::createFromFormat('H:i', $lunes[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $lunes[1])->format('H:i') || Carbon::createFromFormat('H:i', $lunes[2])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $lunes[3])->format('H:i')){
                         $abierto = 1;    
                 }else{
                         $abierto = 0;
@@ -59,7 +59,7 @@ class SiteController extends Controller
                 break;
 
             case 'Tuesday':
-                if(Carbon::createFromFormat('H:i', $martes[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $martes[1])->format('H:i')){
+                if(Carbon::createFromFormat('H:i', $martes[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $martes[1])->format('H:i') || Carbon::createFromFormat('H:i', $martes[2])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $martes[3])->format('H:i')){
                         $abierto = 1;    
                 }else{
                         $abierto = 0;
@@ -68,7 +68,7 @@ class SiteController extends Controller
                 break;
 
             case 'Wednesday':
-                if(Carbon::createFromFormat('H:i', $miercoles[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $miercoles[1])->format('H:i')){
+                if(Carbon::createFromFormat('H:i', $miercoles[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $miercoles[1])->format('H:i') || Carbon::createFromFormat('H:i', $miercoles[2])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $miercoles[3])->format('H:i')){
                         $abierto = 1;    
                 }else{
                         $abierto = 0;
@@ -78,7 +78,7 @@ class SiteController extends Controller
 
             case 'Thursday':
 
-                if( Carbon::createFromFormat('H:i', $jueves[0])->format('H:i') <= $hora && $hora <= Carbon::createFromFormat('H:i', $jueves[1])->format('H:i') ){
+                if( Carbon::createFromFormat('H:i', $jueves[0])->format('H:i') <= $hora && $hora <= Carbon::createFromFormat('H:i', $jueves[1])->format('H:i')  ||  Carbon::createFromFormat('H:i', $jueves[2])->format('H:i') <= $hora && $hora <= Carbon::createFromFormat('H:i', $jueves[3])->format('H:i') ){
                         $abierto = 1;    
                 }else{
                     
@@ -88,7 +88,7 @@ class SiteController extends Controller
                 break;
 
             case 'Friday':
-                if(Carbon::createFromFormat('H:i', $viernes[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $viernes[1])->format('H:i')){
+                if(Carbon::createFromFormat('H:i', $viernes[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $viernes[1])->format('H:i') || Carbon::createFromFormat('H:i', $viernes[2])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $viernes[3])->format('H:i')){
                         $abierto = 1;    
                 }else{
                         $abierto = 0;
@@ -97,7 +97,7 @@ class SiteController extends Controller
                 break;
 
             case 'Saturday':
-                if(Carbon::createFromFormat('H:i', $sabado[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $sabado[1])->format('H:i')){
+                if(Carbon::createFromFormat('H:i', $sabado[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $sabado[1])->format('H:i')  ||  Carbon::createFromFormat('H:i', $sabado[2])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $sabado[3])->format('H:i')){
                         $abierto = 1;    
                 }else{
                         $abierto = 0;
@@ -106,7 +106,7 @@ class SiteController extends Controller
                 break;
 
             case 'Sunday':
-                if(Carbon::createFromFormat('H:i', $domingo[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $domingo[1])->format('H:i')){
+                if(Carbon::createFromFormat('H:i', $domingo[0])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $domingo[1])->format('H:i')  || Carbon::createFromFormat('H:i', $domingo[2])->format('H:i') <= $hora && $hora < Carbon::createFromFormat('H:i', $domingo[3])->format('H:i')){
                         $abierto = 1;    
                 }else{
                         $abierto = 0;
@@ -134,11 +134,13 @@ class SiteController extends Controller
 
     public function ciudadruta($slug)
     {
-        $ciudad = Ciudad::where('slug','=',$slug)->first();
-        $restaurantes = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id)->get();
+        $hoy = Carbon::now(-3)->format('Y-m-d');
+        $ciudad = Ciudad::where('slug','=', $slug)->first();
+        $restaurantes = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->get();
+        $destacados = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('destacado','>',$hoy)->get();
         $categorias = Categoria::where('estatus','=',1)->get();
 
-        return view('restaurantes',compact('restaurantes','ciudad','categorias'));
+        return view('restaurantes',compact('restaurantes','ciudad','categorias','hoy','destacados'));
 
     }
     public function ciudadcategoria($ciudad , $categoria)

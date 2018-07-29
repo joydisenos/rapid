@@ -1,6 +1,6 @@
 @extends('layouts.rapid')
 @section('content')
-
+ 
 
 @guest
 @else
@@ -50,7 +50,10 @@
 						@endif
 							
 					 </small><br>
-					<small><b>Costo de envio:</b> ${{$restaurant->configuracion->envio}}</small>
+					<small><b>Costo de envio:</b> ${{$restaurant->configuracion->envio}}</small><br>
+					<!-- <small><b>Horario de hoy:</b> --> 
+						
+					</small>
 				</div>
 		</div>
 		<hr>
@@ -75,7 +78,7 @@
  <b>Categoria por ejemplo (HAMBURGUESAS)</b>
  <hr>
 	
-@foreach($restaurant->productos as $producto)
+@foreach($restaurant->productos->where('estatus','=',1) as $producto)
 	<div class="media">
 			@if($producto->foto == '')
 			

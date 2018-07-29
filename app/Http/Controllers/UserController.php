@@ -8,23 +8,53 @@ use Illuminate\Support\Facades\Redirect;
 use App\Direccion;
 use App\Compra;
 use App\Pedido;
+use App\Preferencia;
 use App\Ciudad;
 use App\Categoria;
 use App\User;
 use App\Config;
+use Carbon\Carbon;
 
 
+ 
 class UserController extends Controller
 {
     public function index()
     {
-    	return view('panel.panel');
+
+        $preferencias = Preferencia::first();
+  
+      if($preferencias == null)
+      {
+         $preferencias = new Preferencia();
+         $preferencias->precio_membresia = 0;
+         $preferencias->precio_destacado = 0;
+         $preferencias->save();
+
+      }
+
+        if(Auth::user()->tipo == 2)
+
+            {
+                    
+                    $hoy = Carbon::now(-3);
+                    $hasta = new Carbon (Auth::user()->expira);
+                    $expira = $hoy->diffInDays($hasta,false);
+
+                    if($expira < 0){
+                        $expira = 0;
+                    }
+                    
+                    return view('panel.panel',compact('expira','preferencias'));
+            }else{
+                    return view('panel.panel','preferencias');}
     }
     public function perfil()
     {
 
         $categorias = Categoria::where('estatus','=',1)->get();
         $ciudades = Ciudad::where('estatus','=',1)->get();
+        $preferencias = Preferencia::first();
         if(Auth::user()->tipo == 2)
         {
             $config = Config::where('user_id','=',Auth::user()->id)->first();
@@ -33,13 +63,13 @@ class UserController extends Controller
             {
                 $config = new Config();
                 $config->user_id = Auth::user()->id;
-                $config->lunes = '00:00,00:00';
-                $config->martes = '00:00,00:00';
-                $config->miercoles = '00:00,00:00';
-                $config->jueves = '00:00,00:00';
-                $config->viernes = '00:00,00:00';
-                $config->sabado = '00:00,00:00';
-                $config->domingo = '00:00,00:00';
+                $config->lunes = '00:00,00:00,00:00,00:00';
+                $config->martes = '00:00,00:00,00:00,00:00';
+                $config->miercoles = '00:00,00:00,00:00,00:00';
+                $config->jueves = '00:00,00:00,00:00,00:00';
+                $config->viernes = '00:00,00:00,00:00,00:00';
+                $config->sabado = '00:00,00:00,00:00,00:00';
+                $config->domingo = '00:00,00:00,00:00,00:00';
                 $config->envio = 0;
                 $config->save();
 
@@ -51,7 +81,7 @@ class UserController extends Controller
                 $sabado = explode(',', $config->sabado);
                 $domingo = explode(',', $config->domingo);
 
-                return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
+                return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo','preferencias'));
             }else{
                 
                 $lunes = explode(',', $config->lunes);
@@ -62,12 +92,12 @@ class UserController extends Controller
                 $sabado = explode(',', $config->sabado);
                 $domingo = explode(',', $config->domingo);
 
-                return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
+                return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo','preferencias'));
             }
 
         }else{
         
-                return view('panel.perfil',compact('categorias','ciudades'));
+                return view('panel.perfil',compact('categorias','ciudades','preferencias'));
             }
     }
     public function storedireccion(Request $request)
@@ -233,6 +263,7 @@ class UserController extends Controller
         $validatedData = $request->validate([
                 'direccion' => 'required',
                 'delivery' => 'required',
+                'pago' => 'required',
                 ]);
 
 
@@ -255,6 +286,7 @@ class UserController extends Controller
         $pedido->direccion_id = $request->direccion;
         $pedido->envio = $request->envio;
         $pedido->delivery = $request->delivery;
+        $pedido->pago = $request->pago;
         if($request->adicional == ''){
                 $pedido->adicional = '';
             }else{

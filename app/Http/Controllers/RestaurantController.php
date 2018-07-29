@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Producto;
 use App\Pedido;
+use App\Pago;
 use App\Config;
+use App\User;
+use Carbon\Carbon;
 use App\Presentacion;
 
 class RestaurantController extends Controller
@@ -18,6 +21,75 @@ class RestaurantController extends Controller
     public function nuevoproducto()
     {
     	return view('panel.nuevoproducto');
+    }
+
+    public function membresia(Request $request,$estatus)
+
+    {
+        if($estatus == 'aprobado')
+            {
+                $user = User::findOrFail(Auth::user()->id);
+                
+                $expira = new Carbon($user->expira);
+                
+                $user->expira = $expira->addMonth();
+
+                $user->prueba = 2;
+                
+                $user->save();
+
+                $pago = new Pago();
+                $pago->user_id = Auth::user()->id;
+                $pago->save();
+
+                
+                return redirect('panel')->with('status','pago realizado con éxito, su número de referencia es: '. $pago->id);
+            }
+        elseif($estatus == 'fail')
+        {
+            return redirect('panel')->with('error','Hubo un error en la operación por favor intente nuevamente');
+        }
+        elseif($estatus == 'pendiente')
+        {
+            return redirect('panel')->with('status','Su pago se encuentra pendiente por ejecutar');
+        }
+    }
+
+    public function destacado (Request $request , $estatus)
+
+    {
+        if($estatus == 'aprobado')
+            {
+                $user = User::findOrFail(Auth::user()->id);
+                
+                $destacado = Carbon::now(-3);
+                
+                $user->destacado = $destacado->addDays(30);
+                
+                $user->save();
+
+                
+                return redirect('perfil')->with('status','Transacción exitosa');
+            }
+        elseif($estatus == 'fail')
+        {
+            return redirect('perfil')->with('error','Hubo un error en la operación por favor intente nuevamente');
+        }
+        elseif($estatus == 'pendiente')
+        {
+            return redirect('perfil')->with('status','Su pago se encuentra pendiente por ejecutar');
+        }
+    }
+
+
+    public function activarproducto($id,$estatus)
+    {
+        $producto = Producto::findOrFail($id);
+        $producto->estatus = $estatus;
+        $producto->save();
+
+        return redirect()->back()->with('status','Cambio de estado al producto: '.title_case($producto->nombre));
+
     }
     public function showproducto($id)
     {
@@ -32,6 +104,49 @@ class RestaurantController extends Controller
         $pedido->save();
 
         return redirect()->back()->with('status','Pedido Marcado como Entregado');
+    }
+
+    public function horario ()
+
+    {
+        $config = Config::where('user_id','=',Auth::user()->id)->first();
+
+            if(is_null($config))
+            {
+                $config = new Config();
+                $config->user_id = Auth::user()->id;
+                $config->lunes = '00:00,00:00,00:00,00:00';
+                $config->martes = '00:00,00:00,00:00,00:00';
+                $config->miercoles = '00:00,00:00,00:00,00:00';
+                $config->jueves = '00:00,00:00,00:00,00:00';
+                $config->viernes = '00:00,00:00,00:00,00:00';
+                $config->sabado = '00:00,00:00,00:00,00:00';
+                $config->domingo = '00:00,00:00,00:00,00:00';
+                $config->envio = 0;
+                $config->save();
+
+                $lunes = explode(',', $config->lunes);
+                $martes = explode(',', $config->martes);
+                $miercoles = explode(',', $config->miercoles);
+                $jueves = explode(',', $config->jueves);
+                $viernes = explode(',', $config->viernes);
+                $sabado = explode(',', $config->sabado);
+                $domingo = explode(',', $config->domingo);
+
+                return view('panel.horario',compact('config','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
+            }else{
+                
+                $lunes = explode(',', $config->lunes);
+                $martes = explode(',', $config->martes);
+                $miercoles = explode(',', $config->miercoles);
+                $jueves = explode(',', $config->jueves);
+                $viernes = explode(',', $config->viernes);
+                $sabado = explode(',', $config->sabado);
+                $domingo = explode(',', $config->domingo);
+
+                return view('panel.horario',compact('config','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
+            }
+
     }
 
     public function actualizarhorario(Request $request)

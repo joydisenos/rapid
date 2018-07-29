@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Ciudad;
 use App\Categoria;
+use App\Preferencia;
 
 class AdminController extends Controller
 {
@@ -100,5 +101,30 @@ class AdminController extends Controller
       $ciudad->save();
 
       return redirect()->back()->with('status','Ciudad registrada con éxito');
+   }
+
+   public function precios()
+   {
+      $preferencias = Preferencia::first();
+  
+      if($preferencias == null)
+      {
+         $preferencias = new Preferencia();
+         $preferencias->precio_membresia = 0;
+         $preferencias->precio_destacado = 0;
+         $preferencias->save();
+
+      }
+      return view('admin.precios',compact('preferencias'));
+   }
+
+   public function storeprecios(Request $request)
+   {
+      $preferencias = Preferencia::first();
+      $preferencias->precio_membresia = $request->precio_membresia;
+      $preferencias->precio_destacado = $request->precio_destacado;
+      $preferencias->save();
+
+      return redirect()->back()->with('status','Configuración guardada con éxito');
    }
 }

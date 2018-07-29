@@ -26,6 +26,8 @@ Perfil
 									Restaurant
 									@endif
                                     </h6>
+
+
                                     <!--<div class="row text-center justify-content-md-center">
                                         <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-people"></i> <font class="font-medium">254</font></a></div>
                                         <div class="col-4"><a href="javascript:void(0)" class="link"><i class="icon-picture"></i> <font class="font-medium">54</font></a></div>
@@ -33,13 +35,42 @@ Perfil
                                     @if(Auth::user()->tipo == 1)
                                     
                                     @elseif(Auth::user()->tipo == 2)
+<?php 
+
+ $mp = new MP(env('YOUR_CLIENT_ID'), env('YOUR_CLIENT_SECRET'));
+          $preference_data = array(
+                  "items" => array(
+              array(
+                
+                  "title" => 'Membresía',
+                  "currency_id" => "ARS",
+                  "category_id" => "Sitio Web",
+                  "quantity" => 1,
+                  "unit_price" => (float)$preferencias->precio_destacado
+                )
+            ),
+                   "back_urls" => array(
+                  "success" => url('destacado/aprobado'),
+                  "failure" => url('destacado/fail'),
+                  "pending" => url('destacado/pendiente')
+              )
+        );
+        $preference = $mp->create_preference($preference_data);
+
+?>
+
+                                    <h6>Deseas destacar tu restaurant por 30 días?</h6>
+<a href="{{$preference['response']['init_point']}}" class="lightblue-M-Ov-ArOn" mp-mode="redirect" name="MP-Checkout" onreturn="execute_my_onreturn">Destacar por ${{$preferencias->precio_destacado}}</a>
+<script type="text/javascript">
+(function(){function $MPC_load(){window.$MPC_loaded !== true && (function(){var s = document.createElement("script");s.type = "text/javascript";s.async = true;s.src = document.location.protocol+"//secure.mlstatic.com/mptools/render.js";var x = document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);window.$MPC_loaded = true;})();}window.$MPC_loaded !== true ? (window.attachEvent ?window.attachEvent('onload', $MPC_load) : window.addEventListener('load', $MPC_load, false)) : null;})();
+</script>
                                     <!-- Formulario de horarios -->
 
 
                                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#horarios">
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#horarios">
   Horarios y envío
-</button>
+</button> -->
 
 <!-- Modal -->
 <div class="modal fade" id="horarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

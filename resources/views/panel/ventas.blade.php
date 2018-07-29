@@ -63,10 +63,12 @@ Ventas
         
         @if($venta->delivery == 1)
         <p>Retiro en Local</p>
-        @elseif($venta->delivery == 2)
-        <p>Pago con efectivo al Delivery</p>
-        @elseif($venta->delivery == 3)
-        <p>Pago con tarjeta al Delivery</p>
+        @elseif($venta->delivery == 0)
+        <p>Envío a domicilio</p>
+        @elseif($venta->pago == 1)
+        <p>Pago con efectivo</p>
+        @elseif($venta->pago == 2)
+        <p>Pago con tarjeta</p>
         @endif
 
         @if($venta->delivery == 1)

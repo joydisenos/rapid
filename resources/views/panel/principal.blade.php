@@ -124,6 +124,11 @@
                         @endif
 
                         @if(Auth::user()->tipo == 2)
+                        
+                        <li>
+                            <a href="{{url('horario')}}" class="waves-effect"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>Horarios y envíos</a>
+                        </li>
+
                         <li>
                             <a href="{{url('productos')}}" class="waves-effect"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>Productos</a>
                         </li>
