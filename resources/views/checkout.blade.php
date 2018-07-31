@@ -1,16 +1,9 @@
 @extends('layouts.rapid')
 @section('content')
 
-@if(Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count() > 0)
-<!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-bottom d-block d-sm-none">
-      <div class="container">
-		
-		<button class="btn btn-warning" style="width:100%;" data-toggle="modal" data-target="#carrito"><font color="white"><i class="fas fa-concierge-bell"></i> Ver pedido ({{Auth::user()->compras->where('pedido_id','=',0)->where('restaurant_id','=',$restaurant->id)->count()}})</font></button>
 
-	  </div>
-    </nav>
-    @endif
+
+ 
 
 
 <!-- Page Content -->
@@ -44,7 +37,7 @@
 				
 				@foreach(Auth::user()->direcciones as $direccion)
 				<div class="custom-control custom-radio">
-					<input type="radio" id="direccion{{$direccion->id}}" name="direccion" class="custom-control-input" value="{{$direccion->id}}">
+					<input type="radio" id="direccion{{$direccion->id}}" name="direccion" class="custom-control-input direcciones" value="{{$direccion->id}}">
 					<label class="custom-control-label" for="direccion{{$direccion->id}}"><b>{{$direccion->alias}}</b> {{$direccion->direccion}}</label>
 				
 				
@@ -82,11 +75,12 @@
 
 			<b>Forma de pago</b>
 			<hr>
+			
 
 			@if($restaurant->configuracion->efectivodelivery == 1)
 			<div class="custom-control custom-radio">
-					<input type="radio" id="efectivo" name="pago" value="1" class="custom-control-input">
-					<label class="custom-control-label" for="efectivo"><b>Efectivo <span class="tipodeenvio"></span></b></label>
+					<input type="radio" id="efectivo" name="pago" value="1" class="custom-control-input envio" disabled>
+					<label class="custom-control-label" for="efectivo"><b>Efectivo al Delivery<span class="tipodeenvio"></span></b></label>
 			</div>
 			@else
 			@endif
@@ -94,8 +88,25 @@
 
 			@if($restaurant->configuracion->tarjetadelivery == 1)
 			<div class="custom-control custom-radio">
-					<input type="radio" id="tarjeta" name="pago" value="2" class="custom-control-input">
-					<label class="custom-control-label" for="tarjeta"><b>Tarjeta <span class="tipodeenvio"></span></b></label>
+					<input type="radio" id="tarjeta" name="pago" value="2" class="custom-control-input envio" disabled>
+					<label class="custom-control-label" for="tarjeta"><b>Tarjeta al Delivery<span class="tipodeenvio"></span></b></label>
+			</div>
+			@else
+			@endif
+
+			@if($restaurant->configuracion->efectivolocal == 1)
+			<div class="custom-control custom-radio">
+					<input type="radio" id="efectivolocal" name="pago" value="1" class="custom-control-input local" disabled>
+					<label class="custom-control-label" for="efectivolocal"><b>Efectivo al local <span class="tipodeenvio"></span></b></label>
+			</div>
+			@else
+			@endif
+			
+
+			@if($restaurant->configuracion->tarjetalocal == 1)
+			<div class="custom-control custom-radio">
+					<input type="radio" id="tarjetalocal" name="pago" value="2" class="custom-control-input local" disabled>
+					<label class="custom-control-label" for="tarjetalocal"><b>Tarjeta al local <span class="tipodeenvio"></span></b></label>
 			</div>
 			@else
 			@endif
@@ -111,7 +122,15 @@
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="adicional"></textarea>
   </div>	
 	<hr>
-<button class="btn btn-warning" style="width:100%;" type="submit">Enviar Pedido</button>
+<button class="btn btn-warning d-none d-sm-block" style="width:100%;" type="submit">Enviar Pedido</button>
+<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-bottom d-block d-sm-none">
+      <div class="container">
+		
+		<button class="btn btn-warning" style="width:60%;margin:0 auto" type="submit"><font color="white"><i class="fas fa-concierge-bell"></i> Enviar Pedido</font></button>
+
+	  </div>
+    </nav>
 </form>
 <br><br>
 	
@@ -331,10 +350,14 @@
 			var valor = $(this).val();
 			if(valor == 1){
 				var envio = 0;
-				$('.tipodeenvio').text('en el local');
+				$(".envio").attr('disabled','disabled');
+				$(".local").removeAttr('disabled');
+				$(".direcciones").attr('disabled','disabled');
 			}else{
 				var envio = {{$restaurant->configuracion->envio}};
-				$('.tipodeenvio').text('al delivery');
+				$(".local").attr('disabled','disabled');
+				$(".envio").removeAttr('disabled');
+				$(".direcciones").removeAttr('disabled');
 			}
 		$('#envio').val(envio);
 		});

@@ -1,15 +1,16 @@
-@extends('panel.principal')
+@extends('admin.principal')
 @section('titulo')
 Ventas
 @endsection
 @section('content')
 
-@if(Auth::user()->ventas->count() > 0)
+@if($ventas->count() > 0)
 <div class="table-responsive m-t-40">
                                     <table class="table stylish-table">
                                         <thead>
                                             <tr>
                                                 <th>Usuario</th>
+                                                <th>Restaurant</th>
                                                 <th>Teléfono</th>
                                                 <th>Email</th>
                                                 <th>Detalles</th>
@@ -27,33 +28,20 @@ Ventas
 @foreach($ventas as $venta)
 <tr>
     <td>{{title_case($venta->user->name)}} {{title_case($venta->user->apellido)}}</td>
+    <td>{{title_case($venta->restaurant->nombre_del_restaurante)}}</td>
     <td>{{$venta->user->telefono}}</td>
     <td>{{$venta->user->email}}</td>
     <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#venta{{$venta->id}}"><!-- Insertar modal con detalles -->Detalles</button></td>
     <td>{{$venta->created_at->format('d/m')}}</td>
     <td>{{$venta->total}}</td>
     <td>
-        <form action="{{url('venta').'/'.$venta->id}}" method="post">
-        {{csrf_field()}}
-        <select name="entrega" id="entrega" class="form-control">
-            <option value="1" 
-            @if($venta->estatus == 1)
-            selected
-            @endif
-            >Pendiente</option>
-            <option value="2"
-            @if($venta->estatus == 2)
-            selected
-            @endif
-            >Entregado</option>
-            <option value="3"
-            @if($venta->estatus == 3)
-            selected
-            @endif
-            >Cancelado</option>
-        </select>
-        <button class="btn btn-primary">Marcar</button>
-        </form>
+        @if($venta->estatus == 1)
+        Pendiente
+        @elseif($venta->estatus == 2)
+        <span style="color: green;">Entregado</span>
+        @elseif($venta->estatus == 3)
+        <span style="color: red;">Cancelado</span>
+        @endif
     </td>
     
 </tr>
@@ -64,7 +52,7 @@ Ventas
                                     </table>
                                 </div>
 
-@foreach(Auth::user()->ventas as $venta)
+@foreach($ventas as $venta)
 <!-- Modal -->
 <div class="modal fade" id="venta{{$venta->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -81,9 +69,7 @@ Ventas
         <p>Retiro en Local</p>
         @elseif($venta->delivery == 0)
         <p>Envío a domicilio</p>
-        @endif
-
-        @if($venta->pago == 1)
+        @elseif($venta->pago == 1)
         <p>Pago con efectivo</p>
         @elseif($venta->pago == 2)
         <p>Pago con tarjeta</p>
@@ -144,6 +130,6 @@ Ventas
 @endforeach
 
 @else
-<h4 class="card-title">Aún no tienes ventas registradas, comparte tu restaurante con clientes y comienza a multiplicar tus pedidos hoy mismo! </h4>
+
 @endif
 @endsection

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Ciudad;
 use App\Categoria;
+use App\Pedido;
 use App\Preferencia;
 
 class AdminController extends Controller
@@ -13,6 +14,12 @@ class AdminController extends Controller
    public function index()
    {
    	return view('admin.inicio');
+   }
+
+   public function pedidos()
+   {
+      $ventas = Pedido::orderBy('id','desc')->get();
+      return view('admin.pedidos',compact('ventas'));
    }
 
    public function usuarios()
@@ -126,5 +133,32 @@ class AdminController extends Controller
       $preferencias->save();
 
       return redirect()->back()->with('status','Configuración guardada con éxito');
+   }
+
+   public function activar($estatus,$user)
+   {
+      $user = User::findOrFail($user);
+      $user->estatus = $estatus;
+      $user->save();
+
+      return redirect()->back()->with('status','Restaurant Actualizado');
+   }
+
+   public function expira($user, Request $request)
+   {
+      $user = User::findOrFail($user);
+      $user->expira = $request->fecha;
+      $user->save();
+
+      return redirect()->back()->with('status','Fecha de expiración modificada');
+   }
+
+   public function destaca($user, Request $request)
+   {
+      $user = User::findOrFail($user);
+      $user->destacado = $request->fecha;
+      $user->save();
+
+      return redirect()->back()->with('status','Fecha de expiración modificada');
    }
 }

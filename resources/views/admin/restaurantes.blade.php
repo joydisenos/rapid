@@ -19,7 +19,8 @@ Admin Restaurantes
                                                 <th>Localidad</th>
                                                 <th>Ciudad (asignada)</th>
                                                 <th>Seleccionar Ciudad</th>
-                                                <th>Estado</th>
+                                                <th>Expira membresía</th>
+                                                <th>Expira destacado</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -38,9 +39,11 @@ Admin Restaurantes
                                                 </td>
                                                 <td>
                                                 @if($usuario->estatus == 1)
-                                                	activo
+                                                	
+                                                    <a href="{{url('admin/restaurantes/a/0').'/'.$usuario->id}}" class="btn btn-warning">Activo</a>
                                                 	@else
-                                                	suspendido
+                                                    <a href="{{url('admin/restaurantes/a/1').'/'.$usuario->id}}" class="btn btn-danger">Suspendido</a>
+                                                	
                                                 	@endif
                                                 </td>
                                                 <td>
@@ -68,11 +71,20 @@ Admin Restaurantes
                                                 	</form>
                                                 </td>
                                                 <td>
-                                                	@if($usuario->ciudad == 0)
-                                                    <span style="color:red;">Inactivo</span>
-                                                    @else
-                                                    Activo
-                                                    @endif
+                                                	<form action="{{url('admin/restaurantes/e').'/'.$usuario->id}}" method="post">
+                                                        {{csrf_field()}}
+                                                     <input type="date" name="fecha" value="{{$usuario->expira}}" class="form-control">
+                                                    <button type="submit" class="btn btn-primary">Asignar</button>
+                                                        
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="{{url('admin/restaurantes/d').'/'.$usuario->id}}" method="post">
+                                                        {{csrf_field()}}
+                                                     <input type="date" name="fecha" value="{{$usuario->destacado}}" class="form-control">
+                                                    <button type="submit" class="btn btn-primary">Asignar</button>
+                                                        
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach

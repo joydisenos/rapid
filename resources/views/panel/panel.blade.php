@@ -9,8 +9,8 @@ Panel @if(Auth::user()->tipo == 1) Cliente @elseif(Auth::user()->tipo == 2) Rest
 @if(Auth::user()->tipo == 1) 
  
 <h4 class="card-title">Bienvenido! {{title_case(Auth::user()->name)}}</h4>
-@elseif(Auth::user()->tipo == 2) 
 
+@elseif(Auth::user()->tipo == 2) 
 
 <h4 class="card-title">Bienvenido! {{title_case(Auth::user()->name)}}</h4>
 <p>Tienes {{$expira}} días de prueba para utilizar nuestro portal sin límite de ventas!</p>
@@ -50,28 +50,4 @@ Panel @if(Auth::user()->tipo == 1) Cliente @elseif(Auth::user()->tipo == 2) Rest
 
 
 
-@endsection
-@section('scripts')
-<script>
-
-
-		function execute_my_onreturn (json) {
-    if (json.collection_status=='approved'){
-    	$.post( url('membresia/aprobado'), { name: "John", time: "2pm" })
-  			.done(function( data ) {
-    			alert( "Data Loaded: " + data );
-  			});
-    } else if(json.collection_status=='pending'){
-        alert ('El usuario no completó el pago');
-    } else if(json.collection_status=='in_process'){    
-        alert ('El pago está siendo revisado');    
-    } else if(json.collection_status=='rejected'){
-        alert ('El pago fué rechazado, el usuario puede intentar nuevamente el pago');
-    } else if(json.collection_status==null){
-        alert ('El usuario no completó el proceso de pago, no se ha generado ningún pago');
-    }
-
-
-	
-</script>
 @endsection

@@ -51,8 +51,22 @@
 							
 					 </small><br>
 					<small><b>Costo de envio:</b> ${{$restaurant->configuracion->envio}}</small><br>
-					<!-- <small><b>Horario de hoy:</b> --> 
-						
+					<small><b>Horario de hoy:</b>
+					@if($hoy->format('l') == 'Monday')
+					  {{$lunes[0]}} a {{$lunes[1]}}, {{$lunes[2]}} a {{$lunes[3]}}</p>
+					  @elseif($hoy->format('l') == 'Tuesday')
+					  {{$martes[0]}} a {{$martes[1]}}, {{$martes[2]}} a {{$martes[3]}}
+					  @elseif($hoy->format('l') == 'Wednesday')
+					  {{$miercoles[0]}} a {{$miercoles[1]}}, {{$miercoles[2]}} a {{$miercoles[3]}}
+					  @elseif($hoy->format('l') == 'Thursday')
+					  {{$jueves[0]}} a {{$jueves[1]}}, {{$jueves[2]}} a {{$jueves[3]}}
+					  @elseif($hoy->format('l') == 'Friday')
+					  {{$viernes[0]}} a {{$viernes[1]}}, {{$viernes[2]}} a {{$viernes[3]}}
+					  @elseif($hoy->format('l') == 'Saturday')
+					  {{$sabado[0]}} a {{$sabado[1]}}, {{$sabado[2]}} a {{$sabado[3]}}
+					  @elseif($hoy->format('l') == 'Sunday')
+					  {{$domingo[0]}} a {{$domingo[1]}}, {{$domingo[2]}} a {{$domingo[3]}}
+					  @endif	
 					</small>
 				</div>
 		</div>
@@ -103,11 +117,7 @@
 <hr>
 
 <!-- Modal -->
-<form action="{{url('nueva/compra')}}" method="post">
-	{{ csrf_field() }}
-	<input type="hidden" value="{{$producto->id}}" name="producto_id">
-	<input type="hidden" value="{{$restaurant->id}}" name="restaurant_id">
-	<input type="hidden" value="{{$producto->precio}}" name="precio" id="precio{{$producto->id}}">
+
 
 <div class="modal fade" id="producto{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -148,16 +158,69 @@
 
 <h3>Para realizar Pedidos es necesario ser un usuario registrado</h3>
 
-<div class="row">
-	<div class="col">
-		<a href="{{url('login')}}" class="btn btn-warning">Iniciar Sesion</a>
-	</div>
-	<div class="col">
-		<a href="{{url('register')}}" class="btn btn-warning">Registro</a>
-	</div>
-</div>
+
+
+<form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                        {{ csrf_field() }}
+
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            <label for="email" class="col-md-12 control-label">E-Mail</label>
+
+                            <div class="col-md-12">
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+
+                                @if ($errors->has('email'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-12 control-label">Contraseña</label>
+
+                            <div class="col-md-12">
+                                <input id="password" type="password" class="form-control" name="password" required>
+
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Mantener sesión abierta
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Iniciar Sesión
+                                </button>
+
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Olvido su contraseña?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
 
 @else
+
+<form action="{{url('nueva/compra')}}" method="post">
+	{{ csrf_field() }}
+	<input type="hidden" value="{{$producto->id}}" name="producto_id">
+	<input type="hidden" value="{{$restaurant->id}}" name="restaurant_id">
+	<input type="hidden" value="{{$producto->precio}}" name="precio" id="precio{{$producto->id}}">
 
 	  @if($producto->sabores == '')
 	  @else
@@ -198,12 +261,57 @@
 	
 	<select class="custom-select dinamico{{$producto->id}}" name="cantidad" id="cantidades{{$producto->id}}">
 		<option selected value="">Seleccionar cantidad</option>
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-		<option value="6">6</option>
+		<option value="1">1 Unidad</option>
+		<option value="2">2 Unidades</option>
+		<option value="3">3 Unidades</option>
+		<option value="4">4 Unidades</option>
+		<option value="5">5 Unidades</option>
+		<option value="6">6 Unidades</option>
+		<option value="7">7 Unidades</option>
+		<option value="8">8 Unidades</option>
+		<option value="9">9 Unidades</option>
+		<option value="10">10 Unidades</option>
+		<option value="11">11 Unidades</option>
+		<option value="12">12 Unidades</option>
+		<option value="13">13 Unidades</option>
+		<option value="14">14 Unidades</option>
+		<option value="15">15 Unidades</option>
+		<option value="16">16 Unidades</option>
+		<option value="17">17 Unidades</option>
+		<option value="18">18 Unidades</option>
+		<option value="19">19 Unidades</option>
+		<option value="20">20 Unidades</option>
+		<option value="21">21 Unidades</option>
+		<option value="22">22 Unidades</option>
+		<option value="23">23 Unidades</option>
+		<option value="24">24 Unidades</option>
+		<option value="25">25 Unidades</option>
+		<option value="26">26 Unidades</option>
+		<option value="27">27 Unidades</option>
+		<option value="28">28 Unidades</option>
+		<option value="29">29 Unidades</option>
+		<option value="30">30 Unidades</option>
+		<option value="31">31 Unidades</option>
+		<option value="32">32 Unidades</option>
+		<option value="33">33 Unidades</option>
+		<option value="34">34 Unidades</option>
+		<option value="35">35 Unidades</option>
+		<option value="36">36 Unidades</option>
+		<option value="37">37 Unidades</option>
+		<option value="38">38 Unidades</option>
+		<option value="39">39 Unidades</option>
+		<option value="40">40 Unidades</option>
+		<option value="41">41 Unidades</option>
+		<option value="42">42 Unidades</option>
+		<option value="43">43 Unidades</option>
+		<option value="44">44 Unidades</option>
+		<option value="45">45 Unidades</option>
+		<option value="46">46 Unidades</option>
+		<option value="47">47 Unidades</option>
+		<option value="48">48 Unidades</option>
+		<option value="49">49 Unidades</option>
+		<option value="50">50 Unidades</option>
+		
 	</select>
 	
 	
@@ -235,13 +343,16 @@
         <button type="submit" class="btn btn-warning">Agregar $<span id="btnprecio{{$producto->id}}">{{$producto->precio}}</span></button>
         @endif
       </div>
+      </form>
       @endguest
+
+
 	
 </div>
 	
   </div>
 </div>
-</form>
+
 
 <script>
 	$(document).ready(function() {
@@ -293,7 +404,25 @@
   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
   <b>Informacion del restaurante</b>
   
-  <p>{{$restaurant->direccion}} - {{$restaurant->ciudad}} - Teléfono: {{$restaurant->telefono}}</p>
+  <p>Dirección: {{$restaurant->direccion}} - {{$restaurant->ciudad}}</p>
+  <p>Teléfono: {{$restaurant->telefono}}</p>
+  <h6>Horario de hoy:</h6>
+  @if($hoy->format('l') == 'Monday')
+  <p>Lunes: {{$lunes[0]}} a {{$lunes[1]}}, {{$lunes[2]}} a {{$lunes[3]}}</p>
+  @elseif($hoy->format('l') == 'Tuesday')
+  <p>Martes: {{$martes[0]}} a {{$martes[1]}}, {{$martes[2]}} a {{$martes[3]}}</p>
+  @elseif($hoy->format('l') == 'Wednesday')
+  <p>Miercoles: {{$miercoles[0]}} a {{$miercoles[1]}}, {{$miercoles[2]}} a {{$miercoles[3]}}</p>
+  @elseif($hoy->format('l') == 'Thursday')
+  <p>Jueves: {{$jueves[0]}} a {{$jueves[1]}}, {{$jueves[2]}} a {{$jueves[3]}}</p>
+  @elseif($hoy->format('l') == 'Friday')
+  <p>Viernes: {{$viernes[0]}} a {{$viernes[1]}}, {{$viernes[2]}} a {{$viernes[3]}}</p>
+  @elseif($hoy->format('l') == 'Saturday')
+  <p>Sábado: {{$sabado[0]}} a {{$sabado[1]}}, {{$sabado[2]}} a {{$sabado[3]}}</p>
+  @elseif($hoy->format('l') == 'Sunday')
+  <p>Domingo: {{$domingo[0]}} a {{$domingo[1]}}, {{$domingo[2]}} a {{$domingo[3]}}</p>
+  @endif
+
   </div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
   <b>Opiniones de los usuarios aqui</b>

@@ -28,6 +28,8 @@ class RestaurantController extends Controller
     {
         if($estatus == 'aprobado')
             {
+                $preferencias = Preferencia::first();
+                $monto = $preferencias->precio_membresia;
                 $user = User::findOrFail(Auth::user()->id);
                 
                 $expira = new Carbon($user->expira);
@@ -40,6 +42,8 @@ class RestaurantController extends Controller
 
                 $pago = new Pago();
                 $pago->user_id = Auth::user()->id;
+                $pago->concepto = 'Pago de Membresía';
+                $pago->monto = (float)$monto;
                 $pago->save();
 
                 
@@ -97,10 +101,10 @@ class RestaurantController extends Controller
         return view('panel.editarproducto',compact('producto'));
     }
 
-    public function actualizarventa($id, $estatus)
+    public function actualizarventa($id, Request $request)
     {
         $pedido = Pedido::findOrFail($id);
-        $pedido->estatus = $estatus;
+        $pedido->estatus = $request->entrega;
         $pedido->save();
 
         return redirect()->back()->with('status','Pedido Marcado como Entregado');
@@ -171,6 +175,7 @@ class RestaurantController extends Controller
                 $config->sabado = $sabado;
                 $config->domingo = $domingo;
                 $config->envio = $request->envio;
+                $config->enviomodo = $request->enviomodo;
                 if($request->has('domicilio'))
                 {
                     $config->domicilio = 1;
@@ -194,6 +199,18 @@ class RestaurantController extends Controller
                     $config->efectivodelivery = 1;
                 }else{
                     $config->efectivodelivery = 0;
+                }
+                if($request->has('efectivolocal'))
+                {
+                    $config->efectivolocal = 1;
+                }else{
+                    $config->efectivolocal = 0;
+                }
+                if($request->has('tarjetalocal'))
+                {
+                    $config->tarjetalocal = 1;
+                }else{
+                    $config->tarjetalocal = 0;
                 }
                 $config->save();
 
@@ -351,6 +368,7 @@ class RestaurantController extends Controller
     }
     public function ventas()
     {
-    	return view('panel.ventas');
+        $ventas = Pedido::where('restaurant_id','=', Auth::user()->id)->orderBy('id','desc')->get();
+    	return view('panel.ventas',compact('ventas'));
     }
 }

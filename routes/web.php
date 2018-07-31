@@ -16,6 +16,12 @@ Route::get('/alta','SiteController@alta');
 Route::post('/restaurantes','SiteController@ciudad');
 
 
+Route::get('/email',function(){
+	$nombre = array('nombre' => 'Prueba');
+	return new App\Mail\Pedido($nombre);
+});
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -58,10 +64,11 @@ Route::group(['middleware'=> 'auth'],function(){
 	Route::post('/presentacion/nuevo', 'RestaurantController@storepresentaciones');
 	Route::get('/presentacion/del/{id}', 'RestaurantController@borrarpresentaciones');
 	Route::get('/producto/edit/{id}', 'RestaurantController@showproducto');
+	
 	Route::post('/producto/edit/{id}', 'RestaurantController@actualizarproducto');
 
 	Route::get('/ventas', 'RestaurantController@ventas');
-	Route::get('/venta/{id}/{estatus}', 'RestaurantController@actualizarventa');
+	Route::post('/venta/{id}', 'RestaurantController@actualizarventa');
 	Route::post('/actualizar/horario', 'RestaurantController@actualizarhorario');
 	Route::get('/membresia/{estatus}', 'RestaurantController@membresia');
 	Route::get('/destacado/{estatus}', 'RestaurantController@destacado');
@@ -76,6 +83,9 @@ Route::group(['middleware'=> 'auth'],function(){
     Route::get('/', 'AdminController@index');
     Route::get('/usuarios', 'AdminController@usuarios');
     Route::get('/restaurantes', 'AdminController@restaurantes');
+    Route::post('/restaurantes/e/{user}', 'AdminController@expira');
+    Route::post('/restaurantes/d/{user}', 'AdminController@destaca');
+    Route::get('/restaurantes/a/{estatus}/{user}', 'AdminController@activar');
     Route::get('/categorias', 'AdminController@categorias');
     Route::get('borrar/categoria/{id}', 'AdminController@borrarcategoria');
     Route::get('borrar/ciudad/{id}', 'AdminController@borrarciudad');
@@ -85,6 +95,7 @@ Route::group(['middleware'=> 'auth'],function(){
     Route::post('/asignar', 'AdminController@asignarciudad');
     Route::get('/precios', 'AdminController@precios');
     Route::post('/precios', 'AdminController@storeprecios');
+    Route::get('/pedidos', 'AdminController@pedidos');
 
 });  	
 });

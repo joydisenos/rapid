@@ -27,6 +27,9 @@ class CreateConfigsTable extends Migration
             $table->integer('local')->default(0);
             $table->integer('tarjetadelivery')->default(0);
             $table->integer('efectivodelivery')->default(0);
+            $table->integer('efectivolocal')->default(0);
+            $table->integer('tarjetalocal')->default(0);
+            $table->integer('enviomodo')->default(3);
             $table->float('envio');
             $table->timestamps();
         });

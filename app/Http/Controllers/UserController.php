@@ -47,7 +47,7 @@ class UserController extends Controller
                     
                     return view('panel.panel',compact('expira','preferencias'));
             }else{
-                    return view('panel.panel','preferencias');}
+                    return view('panel.panel',compact('preferencias'));}
     }
     public function perfil()
     {
@@ -191,7 +191,8 @@ class UserController extends Controller
     }
     public function compras()
     {
-    	return view('panel.compras');
+        $pedidos = Pedido::where('user_id','=',Auth::user()->id)->orderBy('id','desc')->get();
+    	return view('panel.compras',compact('pedidos'));
     }
     public function eliminarcompra($id)
     {
@@ -259,12 +260,18 @@ class UserController extends Controller
     public function pedido(Request $request)
     {
 
-
+      
         $validatedData = $request->validate([
-                'direccion' => 'required',
                 'delivery' => 'required',
                 'pago' => 'required',
                 ]);
+
+        if($request->delivery == 0)
+        {
+            $validatedData = $request->validate([
+                'direccion' => 'required',
+                ]);
+        }
 
 
         // Variables de Compra
@@ -283,7 +290,12 @@ class UserController extends Controller
         $pedido = new Pedido();
         $pedido->user_id = Auth::user()->id;
         $pedido->restaurant_id = $request->restaurant_id;
-        $pedido->direccion_id = $request->direccion;
+        if($request->has('direccion'))
+            {
+                $pedido->direccion_id = $request->direccion;
+            }else{
+                $pedido->direccion_id = 0;
+            }
         $pedido->envio = $request->envio;
         $pedido->delivery = $request->delivery;
         $pedido->pago = $request->pago;

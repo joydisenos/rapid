@@ -24,9 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        
-
-        return view('panel');
+        return view('panel.panel');
     }
 }

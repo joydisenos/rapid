@@ -27,7 +27,7 @@ Compras
                                            @foreach(session('pedido')->compras as $compra)
 
                                            <tr>
-                                           	<td>{{$compra->nombre}}</td>
+                                           	<td>{{$compra->producto->nombre}}</td>
                                            	<td>{{$compra->cantidad}}</td>
                                            	<td>{{$compra->sabores}} {{$compra->adicionales}}</td>
                                            	<td>{{$compra->precio}}</td>
@@ -74,17 +74,19 @@ Compras
                                         </thead>
                                         <tbody>
 
-@foreach(Auth::user()->pedidos as $pedido)
+@foreach($pedidos as $pedido)
 <tr>
 	<td>{{$pedido->restaurant->nombre_del_restaurante}}</td>
 	<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pedido{{$pedido->id}}"><!-- Insertar modal con detalles -->Detalles</button></td>
 	<td>{{$pedido->total}}</td>
 	<td>
 		@if($pedido->estatus == 1)
-		Por Entregar
+		Pendiente
 		@elseif($pedido->estatus == 2)
 		<span style="color: green;">Entregado</span>
-		@endif
+    @elseif($pedido->estatus == 3)
+		<span style="color: red;">Cancelado</span>
+    @endif
 	</td>
 </tr>
 

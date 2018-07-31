@@ -119,7 +119,7 @@ class SiteController extends Controller
                 break;
         }
 
-    	return view('menu',compact('restaurant','hoy','abierto'));
+    	return view('menu',compact('restaurant','hoy','abierto','lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
     }
 
     public function ciudad(Request $request)
@@ -136,8 +136,8 @@ class SiteController extends Controller
     {
         $hoy = Carbon::now(-3)->format('Y-m-d');
         $ciudad = Ciudad::where('slug','=', $slug)->first();
-        $restaurantes = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->get();
-        $destacados = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('destacado','>',$hoy)->get();
+        $restaurantes = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('estatus','=',1)->get();
+        $destacados = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('destacado','>',$hoy)->where('estatus','=',1)->get();
         $categorias = Categoria::where('estatus','=',1)->get();
 
         return view('restaurantes',compact('restaurantes','ciudad','categorias','hoy','destacados'));

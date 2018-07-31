@@ -50,7 +50,7 @@
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
 			@endif
 				<div class="media-body">
-					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} <span class="badge badge-warning">Destacado</span></h5>
+					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} <span class="badge badge-danger">Destacado</span></h5>
 					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - <i class="fas fa-utensils"></i> {{$restaurant->categorias}}</small><br>
 					<small><b>Tipo de envio:</b>
 
@@ -61,6 +61,15 @@
 						@if($restaurant->configuracion->local)
 						- Retiro en local 	 
 						@endif
+					</small><br>
+					<small><b>Costo de envío:</b> 
+					@if($restaurant->configuracion->enviomodo == 1)
+					Envío Gratis
+					@elseif($restaurant->configuracion->enviomodo == 2)
+					Variable según la zona
+					@elseif($restaurant->configuracion->enviomodo == 3)
+					{{$restaurant->configuracion->envio}}
+					@endif
 					</small>
 				</div>
 
@@ -89,7 +98,15 @@
 						@if($restaurant->configuracion->local)
 						- Retiro en local 	 
 						@endif
-					</small>
+					</small><br>
+					<small><b>Costo de envío:</b> @if($restaurant->configuracion->enviomodo == 1)
+					Envío Gratis
+					@elseif($restaurant->configuracion->enviomodo == 2)
+					Variable según la zona
+					@elseif($restaurant->configuracion->enviomodo == 3)
+					{{$restaurant->configuracion->envio}}
+					@endif
+				</small>
 				</div>
 
 				<a class="btn btn-warning ml-3 d-none d-sm-block" href="{{url('restaurant').'/'.$restaurant->slug}}" role="button">Ver Menú</a>

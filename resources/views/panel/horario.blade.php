@@ -162,7 +162,7 @@ Horarios y envío
                                       Retiro en el Local
                                     </label>
                                   </div>
-                      
+                      <h3>Formas de Pago</h3>
 
                                   <div class="form-check">
                                     <label class="form-check-label">
@@ -187,12 +187,56 @@ Horarios y envío
                                       Efectivo al delivery
                                     </label>
                                   </div>
+
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" name="tarjetalocal" value="1" class="form-check-input"
+                                      @if ($config->tarjetalocal == 1)
+                                      checked
+                                      @else
+                                      @endif
+                                      >
+                                      Tarjeta al Local
+                                    </label>
+                                  </div>
+
+                                  <div class="form-check">
+                                    <label class="form-check-label">
+                                      <input type="checkbox" name="efectivolocal" value="1" class="form-check-input"
+                                      @if ($config->efectivolocal == 1)
+                                      checked
+                                      @else
+                                      @endif
+                                      >
+                                      Efectivo al Local
+                                    </label>
+                                  </div>
 </div>
+
+<h3>Costo de envío</h3>
+
+<div class="container">
+  <div class="form-check">
+    <input class="form-check-input formaenvio" type="radio" name="enviomodo" id="gratis" value="1" @if($config->enviomodo == 1) checked @endif >
+    <label class="form-check-label" for="gratis">Envío gratis</label>
+  </div>
+
+  <div class="form-check">
+    <input class="form-check-input formaenvio" type="radio" name="enviomodo" id="segunzona" value="2" @if($config->enviomodo == 2) checked @endif  >
+    <label class="form-check-label" for="segunzona">Variable según Zona</label>
+  </div>
+
+  <div class="form-check">
+    <input class="form-check-input formaenvio" type="radio" name="enviomodo" id="costofijo" value="3" @if($config->enviomodo == 3) checked @endif  >
+    <label class="form-check-label" for="costofijo">Costo fijo</label>
+  </div>
+</div>
+
 <div class="form-group">
                                     <label class="col-md-12">Costo del envío</label>
                                         
                                             <div class="col-md-12">
-                                            <input type="number" value="{{$config->envio}}" placeholder="Costo del envío local" value="" step="0.5" name="envio" class="form-control form-control-line" required>
+                                            <input type="number" value="{{$config->envio}}" placeholder="Costo del envío local" value="" step="0.5" name="envio" id="costoenvio" class="form-control form-control-line" required>
                                         
                                    </div>
                                    </div>
