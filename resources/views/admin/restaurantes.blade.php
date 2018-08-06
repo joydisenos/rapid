@@ -14,7 +14,7 @@ Admin Restaurantes
                                                 <th>Nombre</th>
                                                 <th>Email</th>
                                                 <th>Teléfono</th>
-                                                <th>Tipo</th>
+                                                <th>Categorías</th>
                                                 <th>Estatus</th>
                                                 <th>Localidad</th>
                                                 <th>Ciudad (asignada)</th>
@@ -31,11 +31,9 @@ Admin Restaurantes
                                                  {{$usuario->email}}</td>
                                                 <td>{{$usuario->telefono}}</td>
                                                 <td>
-                                                	@if($usuario->tipo == 1)
-                                                	Cliente
-                                                	@else
-                                                	Restaurant
-                                                	@endif
+    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#categoria{{$usuario->id}}">
+        Categorias
+        </button>
                                                 </td>
                                                 <td>
                                                 @if($usuario->estatus == 1)
@@ -91,4 +89,47 @@ Admin Restaurantes
                                         </tbody>
                                     </table>
                                 </div>
+
+
+@foreach($usuarios as $usuario)
+<div class="modal fade" id="categoria{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Seleccionar Categorías para {{$usuario->nombre_del_restaurante}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <form action="{{url('admin/categorias/asignar')}}" method="post">
+        {{csrf_field()}}
+        <input type="hidden" name="user_id" value="{{$usuario->id}}">
+      <div class="modal-body">
+        @foreach($categorias as $key => $categoria )
+        <?php $categ = App\Categoriarest::where('user_id','=',$usuario->id)->where('categoria_id','=',$categoria->id)->first(); ?>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="hidden" name="categorias[{{$key}}]" value="0">
+            <input class="form-check-input" name="categorias[{{$key}}]" type="checkbox" value="{{$categoria->id}}"
+
+            @if($categ == null)
+            @else
+            checked
+            @endif 
+            >{{$categoria->nombre}}
+          </label>
+        </div>
+        @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+@endforeach
 @endsection

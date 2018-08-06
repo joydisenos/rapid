@@ -8,6 +8,7 @@ use App\User;
 use App\Config;
 use App\Ciudad;
 use App\Categoria;
+use App\Categoriarest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -138,17 +139,24 @@ class SiteController extends Controller
         $ciudad = Ciudad::where('slug','=', $slug)->first();
         $restaurantes = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('estatus','=',1)->get();
         $destacados = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('destacado','>',$hoy)->where('estatus','=',1)->get();
-        $categorias = Categoria::where('estatus','=',1)->get();
+        $categorias = Categoria::where('estatus','=',1)->orderBy('nombre')->get();
 
         return view('restaurantes',compact('restaurantes','ciudad','categorias','hoy','destacados'));
 
     }
     public function ciudadcategoria($ciudad , $categoria)
     {
+        $hoy = Carbon::now(-3)->format('Y-m-d');
         $ciudad = Ciudad::where('slug','=',$ciudad)->first();
-        $restaurantes = User::where('tipo','=',2)->where('ciudad','=', $ciudad->id)->get();
+        $cat = Categoria::where('slug','=',$categoria)->first();
+        $destacados = Categoriarest::where('categoria_id','=',$cat->id)->whereHas('restaurant', function ($query) use($ciudad,$hoy){
+            $query->where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('destacado','>',$hoy)->where('estatus','=',1);
+        })->get();
+        $restaurantes = Categoriarest::where('categoria_id','=',$cat->id)->whereHas('restaurant', function ($query) use($ciudad,$hoy){
+            $query->where('tipo','=',2)->where('ciudad','=', $ciudad->id )->where('expira','>', $hoy)->where('estatus','=',1);
+        })->get();
         $categorias = Categoria::where('estatus','=',1)->get();
 
-        return view('restaurantes',compact('restaurantes','ciudad','categorias'));
+        return view('categoria',compact('ciudad','cat','restaurantes','destacados','categorias'));
     }
 }

@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="{{asset('css/owl.carousel.css')}}">
         <link rel="stylesheet" href="{{asset('css/owl.theme.css')}}">
         <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+        <link rel="icon" href="{{asset('img/favicon.png')}}" />
 
              <!-- Fonts -->
        <link rel="stylesheet" href="{{asset('css/font-awesome.min.css')}}">
@@ -28,7 +29,7 @@
 
     <footer class="default-footer text-center bg-danger">
         <div class="container">
-          <img class="mb-40 footer-logo img-fluid" src="http://www.rapidelly.com/logo.png" alt="" style="max-width:200px;width:100%;">
+          <img class="mb-40 footer-logo img-fluid" src="{{asset('img/logo.png')}}" alt="" style="max-width:200px;width:100%;">
           <span class="copy-right dis-blk">Rapidelly - Todos los derechos reservados 2018</span>
           <span class="social">
             <a href="#"><i class="fa fa-facebook" style="color:#fff!important"></i></a>

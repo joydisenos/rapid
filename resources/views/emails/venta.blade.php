@@ -1,7 +1,7 @@
 @component('mail::message')
 # Pedido Realizado <br>
 
-<p>Hola, {{title_case($pedido->user->name)}} hemos recibido el siguiente pedido al restaurant {{title_case($pedido->restaurant->nombre_del_restaurante)}}:</p>
+<p>se ha recibido el siguiente pedido de {{title_case($pedido->user->name)}} {{title_case($pedido->user->apellido)}}, sus datos de contacto son: <b>email:</b> {{$pedido->user->email}} <b>teléfono:</b> {{$pedido->user->telefono}} <br>  al restaurant {{title_case($pedido->restaurant->nombre_del_restaurante)}}:</p>
 
 <p>
 @if($pedido->delivery == 1)
@@ -68,10 +68,10 @@
 
 
 
-<p>En breves momentos procesaremos su solicitud! Para mayor información puede comunicarse con nosotros por el teléfono: {{$pedido->restaurant->telefono}} o por nuestro correo electrónico: <a href="mailto:{{$pedido->restaurant->email}}">{{$pedido->restaurant->email}}</a>. {{$pedido->restaurant->direccion}}</p>
+<p>Contacta con el cliente rápido para mantener excelentes comentarios!</p>
 
-@component('mail::button', ['url' => 'http://www.rapidelly.com/compras'])
-Ir a mis compras
+@component('mail::button', ['url' => 'http://www.rapidelly.com/ventas'])
+Ir a mis ventas
 @endcomponent
 
 Todos los Derechos Reservados, Rapidelly.com<br>

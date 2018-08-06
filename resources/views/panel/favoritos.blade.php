@@ -18,6 +18,14 @@ Favoritos
                                             </tr>
                                         </thead>
                                         <tbody>
+            @foreach(Auth::user()->favoritos as $favorito)
+            <tr>
+                <td>{{$favorito->restaurant->nombre_del_restaurante}}</td>
+                <td>{{$favorito->restaurant->descripcion}}</td>
+                <td>{{$favorito->restaurant->direccion}}</td>
+                <td> <a href="{{url('restaurant').'/'.$favorito->restaurant->slug}}" class="btn btn-danger">Ver Menu</a> </td>
+            </tr>
+            @endforeach
  </tbody>
                                     </table>
  </div>

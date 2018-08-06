@@ -7,6 +7,8 @@ Compras
 
 @if( session('pedido'))
 
+
+
 <h5 class="card-title">Pedido realizado Correctamente! a Restaurant {{title_case(session('pedido')->restaurant->nombre_del_restaurante)}}</h5>
 
 <p>se ha recibido el siguiente pedido:</p>
@@ -83,7 +85,11 @@ Compras
 		@if($pedido->estatus == 1)
 		Pendiente
 		@elseif($pedido->estatus == 2)
+
 		<span style="color: green;">Entregado</span>
+    @if($pedido->comentario == 0)
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#comment" data-restaurant="{{$pedido->restaurant_id}}" data-pedido="{{$pedido->id}}"><!-- Insertar modal con detalles -->Comentar</button>
+    @endif
     @elseif($pedido->estatus == 3)
 		<span style="color: red;">Cancelado</span>
     @endif
@@ -155,4 +161,75 @@ Compras
 @else
 <h4 class="card-title">Aún no tienes compras, puedes buscar restaurantes en tu localidad <a href="{{url('/')}}">rapidelly.com</a></h4>
 @endif
+
+<div class="modal fade" id="comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Comentarios</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <form action="{{url('comentar')}}" method="post">
+      <div class="modal-body">
+       
+          {{csrf_field()}}
+          <input type="hidden" id="restaurant_id" name="restaurant_id">
+          <input type="hidden" id="pedido_id" name="pedido_id">
+          <input type="hidden" id="user_id" name="user_id" value="{{Auth::user()->id}}">
+          
+          <div class="row">
+            <div class="col-md-4">
+               <label class="col-form-label">Valoración:</label>
+            </div>
+            <div class="col-md-8">
+              <div class="estrellas">
+          <p class="clasificacion">
+            <input id="radio1" type="radio" name="puntos" value="5"><!--
+            --><label for="radio1">★</label><!--
+            --><input id="radio2" type="radio" name="puntos" value="4"><!--
+            --><label for="radio2">★</label><!--
+            --><input id="radio3" type="radio" name="puntos" value="3"><!--
+            --><label for="radio3">★</label><!--
+            --><input id="radio4" type="radio" name="puntos" value="2"><!--
+            --><label for="radio4">★</label><!--
+            --><input id="radio5" type="radio" name="puntos" value="1"><!--
+            --><label for="radio5">★</label>
+          </p>
+          </div>
+            </div>
+          </div>
+          
+
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Comentario:</label>
+            <textarea class="form-control" id="message-text" name="comentario"></textarea>
+          </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Comentar</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+@endsection
+@section('scripts')
+<script>
+  $('#comment').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) 
+  var recipient = button.data('restaurant')
+  var pedido = button.data('pedido') 
+
+
+  var modal = $(this)
+  modal.find('.modal-title').text('Comentarios')
+  modal.find('#restaurant_id').val(recipient)
+  modal.find('#pedido_id').val(pedido)
+})
+</script>
 @endsection

@@ -105,10 +105,11 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
+    background: red;
 }
 
 .header a {
-    color: #bbbfc3;
+    color: #ffffff;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
@@ -161,12 +162,17 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 570px;
+    background: red;
 }
 
 .footer p {
-    color: #AEAEAE;
+    color: #ffffff;
     font-size: 12px;
     text-align: center;
+}
+
+.footer a {
+    color:#ececec;
 }
 
 /* Tables */

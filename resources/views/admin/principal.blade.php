@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="#">
+    <link rel="icon" href="{{asset('img/favicon.png')}}" />
     <title>@yield('titulo')</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -51,7 +51,7 @@
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="http://www.rapidelly.com/logo.png" alt="rapidelly" class="dark-logo img-fluid mt-2" style="filter:invert(100%);max-width: 70%;"/>
+                            <img src="{{asset('img/logo.png')}}" alt="rapidelly" class="dark-logo img-fluid mt-2" style="filter:invert(100%);max-width: 70%;"/>
                             
                         </b>
                         <!--End Logo icon -->

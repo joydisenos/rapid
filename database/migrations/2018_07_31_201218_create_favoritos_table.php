@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePedidosTable extends Migration
+class CreateFavoritosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,10 @@ class CreatePedidosTable extends Migration
      */
     public function up()
     {
-        Schema::create('pedidos', function (Blueprint $table) {
+        Schema::create('favoritos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->integer('direccion_id');
             $table->integer('restaurant_id');
-            $table->float('envio');
-            $table->integer('delivery');
-            $table->integer('pago');
-            $table->string('adicional');
-            $table->integer('comentario')->default(0);
-            $table->integer('estatus')->default(1);
-            $table->float('total');
             $table->timestamps();
         });
     }
@@ -36,6 +28,6 @@ class CreatePedidosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('favoritos');
     }
 }

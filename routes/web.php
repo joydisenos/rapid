@@ -16,11 +16,6 @@ Route::get('/alta','SiteController@alta');
 Route::post('/restaurantes','SiteController@ciudad');
 
 
-Route::get('/email',function(){
-	$nombre = array('nombre' => 'Prueba');
-	return new App\Mail\Pedido($nombre);
-});
-
 
 Auth::routes();
 
@@ -44,7 +39,10 @@ Route::group(['middleware'=> 'auth'],function(){
 	Route::post('/actualizar/usuario', 'UserController@actualizar');
 	Route::post('/nueva/compra', 'UserController@compra');
 	Route::get('/checkout/{slug}', 'UserController@checkout');	
-	Route::post('/checkout', 'UserController@pedido');	
+	Route::post('/checkout', 'UserController@pedido');
+	Route::get('/favorito/marcar/{restaurant}', 'UserController@favorito');
+	Route::get('/favorito/desmarcar/{restaurant}', 'UserController@quitarfavorito');
+	Route::post('comentar', 'UserController@comentar');
   	
 });
 
@@ -77,7 +75,7 @@ Route::group(['middleware'=> 'auth'],function(){
 
 
 // Admin
-Route::group(['middleware'=> 'auth'],function(){
+Route::group(['middleware'=> 'role:dev|admin'],function(){
 	Route::prefix('admin')->group(function () {
 
     Route::get('/', 'AdminController@index');
@@ -96,6 +94,7 @@ Route::group(['middleware'=> 'auth'],function(){
     Route::get('/precios', 'AdminController@precios');
     Route::post('/precios', 'AdminController@storeprecios');
     Route::get('/pedidos', 'AdminController@pedidos');
+    Route::post('/categorias/asignar', 'AdminController@asignarcategorias');
 
 });  	
 });

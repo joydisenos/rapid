@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Pedi comida a domicilio con Rapidelly.com">
     <meta name="author" content="Rapidelly.com">
-	<link rel="icon" href="/favicon.png" />
+	<link rel="icon" href="{{asset('img/favicon.png')}}" />
 
     <title>Rapidelly.com - Pedi comida online</title>
 
@@ -44,7 +44,7 @@
         	<div class="col">
         		<span class="text-muted text-center">Rapidelly.com - 2018 - Argentina</span>
 		<br>
-		<img src="http://www.rapidelly.com/logo.png" width="150px" height="auto"/>
+		<img src="{{asset('img/logo.png')}}" width="150px" height="auto"/>
         	</div>
         	@guest
 

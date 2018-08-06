@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Pedido as MailPedido;
+use App\Mail\Registro as MailRegistro;
+use App\Mail\Venta as MailVenta;
 use App\Direccion;
 use App\Compra;
 use App\Pedido;
 use App\Preferencia;
 use App\Ciudad;
 use App\Categoria;
+use App\Comentario;
 use App\User;
 use App\Config;
+use App\Favorito;
 use Carbon\Carbon;
 
 
@@ -52,7 +58,7 @@ class UserController extends Controller
     public function perfil()
     {
 
-        $categorias = Categoria::where('estatus','=',1)->get();
+        $categorias = Categoria::where('estatus','=',1)->orderBy('nombre')->get();
         $ciudades = Ciudad::where('estatus','=',1)->get();
         $preferencias = Preferencia::first();
         if(Auth::user()->tipo == 2)
@@ -81,6 +87,10 @@ class UserController extends Controller
                 $sabado = explode(',', $config->sabado);
                 $domingo = explode(',', $config->domingo);
 
+                $user = User::findOrFail(Auth::user()->id);
+
+                Mail::to('restaurantes@rapidelly.com')->send(new MailRegistro($user));
+
                 return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo','preferencias'));
             }else{
                 
@@ -91,6 +101,7 @@ class UserController extends Controller
                 $viernes = explode(',', $config->viernes);
                 $sabado = explode(',', $config->sabado);
                 $domingo = explode(',', $config->domingo);
+
 
                 return view('panel.perfil',compact('categorias','ciudades','config','lunes','martes','miercoles','jueves','viernes','sabado','domingo','preferencias'));
             }
@@ -312,8 +323,12 @@ class UserController extends Controller
             $compra->save();
         }
 
-
         
+        $emails = ['restaurantes@rapidelly.com' , $pedido->user->email];
+        $restaurantMail = $pedido->restaurant->email;
+
+        Mail::to($emails)->send(new MailPedido($pedido));
+        Mail::to($restaurantMail)->send(new MailVenta($pedido));
        
         return Redirect::to('compras')->with('pedido',$pedido);
     }
@@ -324,4 +339,51 @@ class UserController extends Controller
     	return view('panel.favoritos');
     }
     
+    public function favorito($restaurant)
+    {
+        $user = Auth::user()->id;
+        $favorito = Favorito::where('user_id' , '=' , $user)->where('restaurant_id' , '=' , $restaurant)->first();
+        if($favorito == null)
+        {
+            $favorito = new Favorito();
+            $favorito->user_id = $user;
+            $favorito->restaurant_id = $restaurant;
+            $favorito->save();
+
+            return redirect()->back()->with('status','Restaurant marcado como favorito');
+        }else{
+            return redirect()->back()->with('error','Este restaurant ya esta marcado como favorito');
+        }
+
+    }
+
+    public function quitarfavorito($restaurant)
+    {
+        $user = Auth::user()->id;
+        $favorito = Favorito::where('user_id' , '=' , $user)->where('restaurant_id' , '=' , $restaurant)->first();
+        $favorito->delete();
+        return redirect()->back()->with('status','Favorito desmarcado');
+    }
+
+    public function comentar(Request $request)
+    {
+        $validatedData = $request->validate([
+                'puntos' => 'required',
+                'comentario' => 'required',
+                ]);
+        
+        $comentario = new Comentario();
+        $comentario->user_id = $request->user_id;
+        $comentario->restaurant_id = $request->restaurant_id;
+        $comentario->comentario = $request->comentario;
+        $comentario->puntos = $request->puntos;
+        $comentario->save();
+
+        $pedido = Pedido::findOrFail($request->pedido_id);
+        $pedido->comentario = 1;
+        $pedido->save();
+
+        return redirect()->back()->with('status','Comentario publicado!');
+
+    }
 }

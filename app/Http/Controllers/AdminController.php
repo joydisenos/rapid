@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Ciudad;
 use App\Categoria;
+use App\Categoriarest;
 use App\Pedido;
 use App\Preferencia;
 
@@ -33,13 +34,39 @@ class AdminController extends Controller
    {
       $usuarios = User::where('tipo','=',2)->get();
       $ciudades = Ciudad::where('estatus','=',1)->get();
-      return view('admin.restaurantes',compact('usuarios','ciudades'));
+      $categorias = Categoria::where('estatus','=',1)->get();
+
+      return view('admin.restaurantes',compact('usuarios','ciudades','categorias'));
    }
 
    public function categorias()
    {
       $categorias = Categoria::where('estatus','=',1)->get();
    	return view('admin.categorias',compact('categorias'));
+   }
+
+   public function asignarcategorias(Request $request)
+   {
+      
+      $categ = Categoriarest::where('user_id','=',$request->user_id)->get();
+      foreach($categ as $del)
+      {
+         $del->delete();
+      }
+      
+      $categorias = $request->input('categorias');
+
+      foreach ($categorias as $categoria) 
+      {
+         
+                  $cat = new Categoriarest();
+                  $cat->user_id = $request->user_id;
+                  $cat->categoria_id = $categoria;
+                  $cat->save();
+      }
+      return redirect()->back()->with('status','Categorias asignadas correctamente');
+   
+
    }
 
    public function borrarcategoria($id)

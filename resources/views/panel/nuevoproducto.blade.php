@@ -44,7 +44,7 @@ Agregar Producto
 				<p>Precio</p>
 			</div>
 			<div class="col-md-8 col-sm-12">
-				<input type="number" step="0.5" name="precio" class="form-control" placeholder="Precio del producto" required>
+				<input type="number" step="0.5" min='0' name="precio" class="form-control" placeholder="Precio del producto" required>
 			</div>
 		</div>
 
@@ -132,7 +132,7 @@ $("#foto_producto").change(function() {
   readURL(this);
 });
 
-var form = " <div class='del'><div class='row'><div class='col-md-4'><p>Adicional</p></div><div class='col-md-4'><input type='text' name='adicional[]' class='form-control' placeholder='Nombre'></div><div class='col-md-2'><input type='number' step='0.5' name='precio_adicional[]' class='form-control' placeholder='Precio'></div><div class='col-md-2'><a class='eliminar btn btn-primary'><i class='fa fa-minus'></i></a></div></div><hr></div> "
+var form = " <div class='del'><div class='row'><div class='col-md-4'><p>Adicional</p></div><div class='col-md-4'><input type='text' name='adicional[]' class='form-control' placeholder='Nombre'></div><div class='col-md-2'><input type='number' step='0.5' name='precio_adicional[]' class='form-control' placeholder='Precio' value='0' min='0' required></div><div class='col-md-2'><a class='eliminar btn btn-primary'><i class='fa fa-minus'></i></a></div></div><hr></div> "
 
 $('#adicionales').click(function(){
 	$('.agregar').append(form);

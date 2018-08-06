@@ -107,7 +107,15 @@ class RestaurantController extends Controller
         $pedido->estatus = $request->entrega;
         $pedido->save();
 
-        return redirect()->back()->with('status','Pedido Marcado como Entregado');
+        if($request->entrega == 1){
+            $estatus = 'Pendiente';
+        }elseif($request->entrega == 2){
+            $estatus = 'Entregado';
+        }elseif($request->entrega == 3){
+            $estatus = 'Cancelado';
+        }
+
+        return redirect()->back()->with('status','Pedido Marcado como '.$estatus);
     }
 
     public function horario ()

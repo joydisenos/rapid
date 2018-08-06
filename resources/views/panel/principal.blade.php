@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="#">
+    <link rel="icon" href="{{asset('img/favicon.png')}}" />
     <title>@yield('titulo')</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -23,6 +23,37 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<style>
+  .estrellas p {
+  text-align: center;
+}
+
+.estrellas label {
+  font-size: 20px;
+}
+
+.estrellas input[type="radio"] {
+  display: none;
+}
+
+.estrellas label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+.estrellas label:hover,
+.estrellas label:hover ~ .estrellas label {
+  color: orange;
+}
+
+.estrellas input[type="radio"]:checked ~ label {
+  color: orange;
+}
+</style>
 </head>
 
 <body class="fix-header card-no-border">
@@ -51,7 +82,7 @@
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="http://www.rapidelly.com/logo.png" alt="rapidelly" class="dark-logo img-fluid mt-2" style="filter:invert(100%);max-width: 70%;"/>
+                            <img src="{{asset('img/logo.png')}}" alt="rapidelly" class="dark-logo img-fluid mt-2" style="filter:invert(100%);max-width: 70%;"/>
                             
                         </b>
                         <!--End Logo icon -->
@@ -116,11 +147,11 @@
                             <a href="{{url('compras')}}" class="waves-effect"><i class="fa fa-table m-r-10" aria-hidden="true"></i>Mis Compras</a>
                         </li>
                         
-                        <!-- Agregar Módulo de Favoritos
+                      
                         <li>
                             <a href="{{url('favoritos')}}" class="waves-effect"><i class="fa fa-star m-r-10" aria-hidden="true"></i>Favoritos</a>
                         </li>
-                    -->
+                   
                         @endif
 
                         @if(Auth::user()->tipo == 2)

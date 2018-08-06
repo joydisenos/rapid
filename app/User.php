@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -60,6 +62,26 @@ class User extends Authenticatable
     public function configuracion()
     {
         return $this->hasOne(Config::class);
-    }    
+    }
+
+    public function favoritos()
+    {
+        return $this->hasMany(Favorito::class);
+    }
+
+    public function marcado()
+    {
+        return $this->hasMany(Favorito::class , 'restaurant_id');
+    }
+
+    public function categorias()
+    {
+        return $this->hasMany(Categoriarest::class);
+    }
+
+    public function comentarios()
+    {
+        return $this->hasMany(Comentario::class,'restaurant_id');
+    }
 
 }

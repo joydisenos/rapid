@@ -1,6 +1,6 @@
 <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
             <div class="container">
-              <a class="navbar-brand" href="{{url('/')}}"><img src="http://www.rapidelly.com/logo.png" alt=""></a>
+              <a class="navbar-brand" href="{{url('/')}}"><img src="{{asset('img/logo.png')}}" alt=""></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i>
               </button>
               <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">

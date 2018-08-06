@@ -112,7 +112,7 @@ Ventas
                         <td>{{$compra->producto->nombre}}</td>
                         <td>{{$compra->sabores}} {{$compra->adicionales}}</td>
                         <td>{{$compra->cantidad}}</td>
-                        <td>{{$compra->precio}}</td>
+                        <td>${{$compra->precio}}</td>
                     </tr>
                     @endforeach
 
@@ -120,14 +120,14 @@ Ventas
                         <td></td>
                         <td></td>
                         <td><strong>Envío</strong></td>
-                        <td>{{$venta->envio}}</td>
+                        <td>${{$venta->envio}}</td>
                     </tr>
 
                     <tr>
                         <td></td>
                         <td></td>
                         <td><strong>Total</strong></td>
-                        <td>{{$venta->total}}</td>
+                        <td>${{$venta->total}}</td>
                     </tr>
                 </tbody>
             </table>

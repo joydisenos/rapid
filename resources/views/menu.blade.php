@@ -24,7 +24,7 @@
           <BR>
 		  <div class="media">
 			@if($restaurant->logo == '')
-			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			<img class="mr-3" src="{{asset('img/favicon.png')}}" width="64px" height="64px" alt="Generic placeholder image">
 			@else
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="{{$restaurant->nombre_del_restaurante}}">
 			@endif
@@ -50,7 +50,15 @@
 						@endif
 							
 					 </small><br>
-					<small><b>Costo de envio:</b> ${{$restaurant->configuracion->envio}}</small><br>
+					<small><b>Costo de envio:</b>
+					@if($restaurant->configuracion->enviomodo == 1)
+					Envío Gratis
+					@elseif($restaurant->configuracion->enviomodo == 2)
+					Variable según la zona
+					@elseif($restaurant->configuracion->enviomodo == 3)
+					${{$restaurant->configuracion->envio}}
+					@endif
+					</small><br>
 					<small><b>Horario de hoy:</b>
 					@if($hoy->format('l') == 'Monday')
 					  {{$lunes[0]}} a {{$lunes[1]}}, {{$lunes[2]}} a {{$lunes[3]}}</p>
@@ -82,14 +90,14 @@
   <li class="nav-item">
     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Informacion</a>
   </li>
-  <!--<li class="nav-item">
-    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Opiniones (578)</a>
-  </li>-->
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Opiniones ({{$restaurant->comentarios->count()}})</a>
+  </li>
 </ul>
 <div class="tab-content" id="myTabContent">
   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 <br> 
- <b>Categoria por ejemplo (HAMBURGUESAS)</b>
+ 
  <hr>
 	
 @foreach($restaurant->productos->where('estatus','=',1) as $producto)
@@ -98,7 +106,7 @@
 			
 			@if($restaurant->logo == '')
 			<!-- Logo Por Defecto -->
-			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			<img class="mr-3" src="{{asset('img/favicon.png')}}" width="64px" height="64px" alt="Generic placeholder image">
 			@else
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
 			@endif
@@ -130,7 +138,7 @@
 			
 			@if($restaurant->logo == '')
 			<!-- Logo Por Defecto -->
-			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			<img class="mr-3" src="{{asset('img/favicon.png')}}" width="64px" height="64px" alt="Generic placeholder image">
 			@else
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
 			@endif
@@ -203,9 +211,12 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-danger">
                                     Iniciar Sesión
                                 </button>
+                                 <a class="btn btn-outline-danger" href="{{url('register')}}">
+                                    Registro
+                                </a>
 
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     Olvido su contraseña?
@@ -260,57 +271,57 @@
 	<small>Seleccione la cantidad</small>
 	
 	<select class="custom-select dinamico{{$producto->id}}" name="cantidad" id="cantidades{{$producto->id}}">
-		<option selected value="">Seleccionar cantidad</option>
-		<option value="1">1 Unidad</option>
-		<option value="2">2 Unidades</option>
-		<option value="3">3 Unidades</option>
-		<option value="4">4 Unidades</option>
-		<option value="5">5 Unidades</option>
-		<option value="6">6 Unidades</option>
-		<option value="7">7 Unidades</option>
-		<option value="8">8 Unidades</option>
-		<option value="9">9 Unidades</option>
-		<option value="10">10 Unidades</option>
-		<option value="11">11 Unidades</option>
-		<option value="12">12 Unidades</option>
-		<option value="13">13 Unidades</option>
-		<option value="14">14 Unidades</option>
-		<option value="15">15 Unidades</option>
-		<option value="16">16 Unidades</option>
-		<option value="17">17 Unidades</option>
-		<option value="18">18 Unidades</option>
-		<option value="19">19 Unidades</option>
-		<option value="20">20 Unidades</option>
-		<option value="21">21 Unidades</option>
-		<option value="22">22 Unidades</option>
-		<option value="23">23 Unidades</option>
-		<option value="24">24 Unidades</option>
-		<option value="25">25 Unidades</option>
-		<option value="26">26 Unidades</option>
-		<option value="27">27 Unidades</option>
-		<option value="28">28 Unidades</option>
-		<option value="29">29 Unidades</option>
-		<option value="30">30 Unidades</option>
-		<option value="31">31 Unidades</option>
-		<option value="32">32 Unidades</option>
-		<option value="33">33 Unidades</option>
-		<option value="34">34 Unidades</option>
-		<option value="35">35 Unidades</option>
-		<option value="36">36 Unidades</option>
-		<option value="37">37 Unidades</option>
-		<option value="38">38 Unidades</option>
-		<option value="39">39 Unidades</option>
-		<option value="40">40 Unidades</option>
-		<option value="41">41 Unidades</option>
-		<option value="42">42 Unidades</option>
-		<option value="43">43 Unidades</option>
-		<option value="44">44 Unidades</option>
-		<option value="45">45 Unidades</option>
-		<option value="46">46 Unidades</option>
-		<option value="47">47 Unidades</option>
-		<option value="48">48 Unidades</option>
-		<option value="49">49 Unidades</option>
-		<option value="50">50 Unidades</option>
+		
+		<option selected value="1">1</option>
+		<option value="2">2</option>
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+		<option value="11">11</option>
+		<option value="12">12</option>
+		<option value="13">13</option>
+		<option value="14">14</option>
+		<option value="15">15</option>
+		<option value="16">16</option>
+		<option value="17">17</option>
+		<option value="18">18</option>
+		<option value="19">19</option>
+		<option value="20">20</option>
+		<option value="21">21</option>
+		<option value="22">22</option>
+		<option value="23">23</option>
+		<option value="24">24</option>
+		<option value="25">25</option>
+		<option value="26">26</option>
+		<option value="27">27</option>
+		<option value="28">28</option>
+		<option value="29">29</option>
+		<option value="30">30</option>
+		<option value="31">31</option>
+		<option value="32">32</option>
+		<option value="33">33</option>
+		<option value="34">34</option>
+		<option value="35">35</option>
+		<option value="36">36</option>
+		<option value="37">37</option>
+		<option value="38">38</option>
+		<option value="39">39</option>
+		<option value="40">40</option>
+		<option value="41">41</option>
+		<option value="42">42</option>
+		<option value="43">43</option>
+		<option value="44">44</option>
+		<option value="45">45</option>
+		<option value="46">46</option>
+		<option value="47">47</option>
+		<option value="48">48</option>
+		<option value="49">49</option>
+		<option value="50">50</option>
 		
 	</select>
 	
@@ -425,8 +436,53 @@
 
   </div>
   <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-  <b>Opiniones de los usuarios aqui</b>
-  <p>Aqui puede ir la opinion de los usuarios sobre este restaurante, (esto podes sacarlo si queres, o dejarlo para implementarlo despues)</p>
+  @foreach($restaurant->comentarios as $comentario)
+  <div class="row">
+  	<div class="col-md-4 mt-4 text-center">
+  @switch($comentario->puntos)
+    @case(1)
+        <i style="color:yellow" class="fas fa-star"></i>
+        @break
+
+    @case(2)
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        @break
+
+    @case(3)
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        @break
+
+    @case(4)
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        @break
+
+    @case(5)
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        <i style="color:yellow" class="fas fa-star"></i>
+        @break
+
+    @default
+        <i style="color:yellow" class="fas fa-star"></i>
+@endswitch
+  	</div>
+  	<div class="col-md-8 mt-4">
+  		<div class="text-center">
+  			<p><b>"{{$comentario->comentario}}"</b></p>
+  			<p>{{title_case($comentario->user->name)}} {{title_case($comentario->user->apellido)}}</p>
+  		</div>
+  	</div>
+  </div>
+  <hr>
+  @endforeach
   </div>
 </div>
 		

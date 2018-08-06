@@ -45,12 +45,22 @@
         @foreach($destacados as $restaurant)
 		<div class="media" style="box-shadow:0px 0px 10px yellow; padding:5px">
 			@if($restaurant->logo == '')
-			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			<img class="mr-3" src="{{asset('img/favicon.png')}}" width="64px" height="64px" alt="Generic placeholder image">
 			@else
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
 			@endif
 				<div class="media-body">
-					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} <span class="badge badge-danger">Destacado</span></h5>
+					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} 
+						@guest
+					@else
+					<?php $favorito = App\Favorito::where('user_id' , '=' , Auth::user()->id)->where('restaurant_id' , '=' , $restaurant->id)->first(); ?>
+					@if($favorito == null)
+					<a href="{{url('favorito/marcar').'/'.$restaurant->id}}"><i class="far fa-star" style="color:yellow"></i></a>
+					@else
+					<a href="{{url('favorito/desmarcar').'/'.$restaurant->id}}"><i class="fas fa-star" style="color:yellow"></i></a>
+					@endif
+					@endguest
+					<span class="badge badge-danger">Destacado</span></h5>
 					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - <i class="fas fa-utensils"></i> {{$restaurant->categorias}}</small><br>
 					<small><b>Tipo de envio:</b>
 
@@ -68,7 +78,7 @@
 					@elseif($restaurant->configuracion->enviomodo == 2)
 					Variable según la zona
 					@elseif($restaurant->configuracion->enviomodo == 3)
-					{{$restaurant->configuracion->envio}}
+					${{$restaurant->configuracion->envio}}
 					@endif
 					</small>
 				</div>
@@ -82,12 +92,22 @@
 		@foreach($restaurantes as $restaurant)
 		<div class="media" style="padding:5px">
 			@if($restaurant->logo == '')
-			<img class="mr-3" src="https://img.pystatic.com/restaurants/app24-logo-thumb-burger-king-terminal-1.png" width="64px" height="64px" alt="Generic placeholder image">
+			<img class="mr-3" src="{{asset('img/favicon.png')}}" width="64px" height="64px" alt="Generic placeholder image">
 			@else
 			<img class="mr-3" src="{{asset('storage').'/'.$restaurant->logo}}" width="64px" height="64px" alt="Generic placeholder image">
 			@endif
 				<div class="media-body">
-					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}}</h5>
+					<h5 class="mt-0">{{title_case($restaurant->nombre_del_restaurante)}} 
+					@guest
+					@else
+					<?php $favorito = App\Favorito::where('user_id' , '=' , Auth::user()->id)->where('restaurant_id' , '=' , $restaurant->id)->first(); ?>
+					@if($favorito == null)
+					<a href="{{url('favorito/marcar').'/'.$restaurant->id}}"><i class="far fa-star" style="color:yellow"></i></a>
+					@else
+					<a href="{{url('favorito/desmarcar').'/'.$restaurant->id}}"><i class="fas fa-star" style="color:yellow"></i></a>
+					@endif
+					@endguest
+					 </h5>
 					<small><i class="fas fa-map-marker-alt"></i> {{$restaurant->direccion}} - <i class="fas fa-utensils"></i> {{$restaurant->categorias}}</small><br>
 					<small><b>Tipo de envio:</b>
 
@@ -104,7 +124,7 @@
 					@elseif($restaurant->configuracion->enviomodo == 2)
 					Variable según la zona
 					@elseif($restaurant->configuracion->enviomodo == 3)
-					{{$restaurant->configuracion->envio}}
+					${{$restaurant->configuracion->envio}}
 					@endif
 				</small>
 				</div>

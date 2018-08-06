@@ -24,7 +24,31 @@
 			<input type="hidden" name="envio" id="envio" value="{{$restaurant->configuracion->envio}}">
 
 		<br> 
+
+<!-- -->
+		<b>Seleccioná un modo de entrega</b>
+				<hr>
+@if($restaurant->configuracion->domicilio == 1)
+
+<div class="custom-control custom-radio">
+					<input type="radio" id="entrega" name="delivery" value="0" class="envios custom-control-input">
+					<label class="custom-control-label" for="entrega"><b>Delivery</b></label>
+</div>			
+
+@endif
+			@if($restaurant->configuracion->local == 1)
+
 			
+
+			<div class="custom-control custom-radio">
+					<input type="radio" id="local" name="delivery" value="1" class="envios custom-control-input">
+					<label class="custom-control-label" for="local"><b>Retiro en el local</b> ({{$restaurant->direccion}})</label>
+			</div>
+			<hr>
+
+			@endif
+<!-- -->
+		<div id="direccionesselect">	
 			<b>Seleccioná tu direccion de entrega</b>
 				<hr>
 
@@ -48,29 +72,8 @@
 				</button>
 				@endif
 				<hr>
-				
-			<b>Seleccioná un modo de entrega</b>
-				<hr>
-@if($restaurant->configuracion->domicilio == 1)
-
-<div class="custom-control custom-radio">
-					<input type="radio" id="entrega" name="delivery" value="0" class="envios custom-control-input">
-					<label class="custom-control-label" for="entrega"><b>Delivery</b></label>
-</div>			
-
-@endif
-			@if($restaurant->configuracion->local == 1)
-
-			
-
-			<div class="custom-control custom-radio">
-					<input type="radio" id="local" name="delivery" value="1" class="envios custom-control-input">
-					<label class="custom-control-label" for="local"><b>Retiro en el local</b></label>
-			</div>
-			<hr>
-
-			@endif
-
+		</div>		
+			<!-- -->
 			
 
 			<b>Forma de pago</b>
@@ -353,11 +356,13 @@
 				$(".envio").attr('disabled','disabled');
 				$(".local").removeAttr('disabled');
 				$(".direcciones").attr('disabled','disabled');
+				$("#direccionesselect").hide();
 			}else{
 				var envio = {{$restaurant->configuracion->envio}};
 				$(".local").attr('disabled','disabled');
 				$(".envio").removeAttr('disabled');
 				$(".direcciones").removeAttr('disabled');
+				$("#direccionesselect").show();
 			}
 		$('#envio').val(envio);
 		});
