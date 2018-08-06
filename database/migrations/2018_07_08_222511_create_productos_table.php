@@ -20,7 +20,7 @@ class CreateProductosTable extends Migration
             $table->integer('user_id');
             $table->string('foto');
             $table->float('precio');
-            $table->string('sabores');
+            $table->text('sabores');
             $table->longText('descripcion');
             $table->integer('estatus')->default(1);
             $table->timestamps();
